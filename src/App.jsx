@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as htmlToImage from "html-to-image";
+import QRCode from "react-qr-code";
 import "./App.css";
 import "./assets/css/bootstrap.min.css";
 import "./assets/css/animate.css";
@@ -6,7 +8,46 @@ import "./assets/css/glightbox.min.css";
 import "./assets/css/lineicons.css";
 import "./assets/css/style.css";
 
+
+
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [qrText, setQrText] = useState("Hello, QR!");
+  const modalRef = useRef(null);
+  const bootstrapModalRef = useRef(null);
+  const qrRef = useRef();
+  
+  const handleDownload = () => {
+      if (!qrRef.current) return;
+      htmlToImage
+        .toPng(qrRef.current)
+        .then((dataUrl) => {
+            const link = document.createElement("a");
+            link.download = "qr-code.png";
+            link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+          console.error("Failed to download QR code:", err);
+        });
+    };
+
+  useEffect(() => {
+    if (!modalRef.current) return;
+    const bootstrap = window.bootstrap;
+    if (!bootstrap) return;
+
+    if (!bootstrapModalRef.current) {
+      bootstrapModalRef.current = new bootstrap.Modal(modalRef.current);
+    }
+
+    if (isOpen) {
+      bootstrapModalRef.current.show();
+    } else {
+      bootstrapModalRef.current.hide();
+    }
+  }, [isOpen]);
+
   return (
     <>
       <div className="preloader">
@@ -74,12 +115,6 @@ function App() {
                           Why
                         </a>
                       </li>
-                      <li className="nav-item">
-                        <a href="javascript:void(0)">Team</a>
-                      </li>
-                      <li className="nav-item">
-                        <a href="javascript:void(0)">Blog</a>
-                      </li>
                     </ul>
                   </div>
                   {/* navbar collapse */}
@@ -116,22 +151,23 @@ function App() {
                     data-wow-duration="1.3s"
                     data-wow-delay="0.2s"
                   >
-                    Basic - SaaS Landing Page
+                    Powerful. Simple. Seamless.
                   </h3>
                   <h2
                     className="header-title wow fadeInUp"
                     data-wow-duration="1.3s"
                     data-wow-delay="0.5s"
                   >
-                    Kickstart Your SaaS or App Site
+                    Your Documents, Done Right — with{" "}
+                    <span className="app-name">Genx PDF</span>
                   </h2>
                   <p
                     className="text wow fadeInUp"
                     data-wow-duration="1.3s"
                     data-wow-delay="0.8s"
                   >
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod tempor
+                    Create, convert, and organize PDFs faster than ever. One app
+                    to handle all your document needs with ease and elegance.
                   </p>
                   <a
                     href="javascript:void(0)"
@@ -160,6 +196,7 @@ function App() {
             </div>
             {/* row */}
           </div>
+          {/* container */}
           {/* container */}
           <div id="particles-1" className="particles" />
         </div>
@@ -231,7 +268,7 @@ function App() {
         {/* container */}
       </div>
       {/*====== BRAND PART ENDS ======*/}
-      {/*====== SERVICES PART START ======*/}
+      {/*====== FEATURES SECTION START ======*/}
       <section id="features" className="services-area pt-120">
         <div className="container">
           <div className="row justify-content-center">
@@ -239,16 +276,14 @@ function App() {
               <div className="section-title text-center pb-40">
                 <div className="line m-auto" />
                 <h3 className="title">
-                  Clean and simple design,
-                  <span> Comes with everything you need to get started!</span>
+                  Unlock Seamless Document Translation,
+                  <span> Tailored for simplicity and speed!</span>
                 </h3>
               </div>
-              {/* section title */}
             </div>
           </div>
-          {/* row */}
           <div className="row justify-content-center">
-            <div className="col-lg-4 col-md-7 col-sm-8">
+            <div className="col-lg-3 col-md-7 col-sm-8">
               <div
                 className="single-services text-center mt-30 wow fadeIn"
                 data-wow-duration="1s"
@@ -265,24 +300,24 @@ function App() {
                     src="assets/images/services/services-shape-1.svg"
                     alt="shape"
                   />
-                  <i className="lni lni-baloon"> </i>
+                  <i className="lni lni-world"></i>
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Clean</a>
+                    <a href="javascript:void(0)">Global Reach</a>
                   </h4>
                   <p className="text">
-                    Lorem ipsum dolor sit amet,consetetur sadipscing elitr,
-                    seddiam nonu eirmod tempor invidunt labore.
+                    Translate PDFs into over 100+ languages with ease. Break
+                    barriers and communicate globally with just a tap.
                   </p>
                   <a className="more" href="javascript:void(0)">
-                    Learn More <i className="lni lni-chevron-right"> </i>
+                    Learn More <i className="lni lni-chevron-right"></i>
                   </a>
                 </div>
               </div>
-              {/* single services */}
             </div>
-            <div className="col-lg-4 col-md-7 col-sm-8">
+
+            <div className="col-lg-3 col-md-7 col-sm-8">
               <div
                 className="single-services text-center mt-30 wow fadeIn"
                 data-wow-duration="1s"
@@ -299,24 +334,61 @@ function App() {
                     src="assets/images/services/services-shape-2.svg"
                     alt="shape"
                   />
-                  <i className="lni lni-cog"> </i>
+                  <i className="lni lni-cog"></i>
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Robust</a>
+                    <a href="javascript:void(0)">Smart & Accurate</a>
                   </h4>
                   <p className="text">
-                    Lorem ipsum dolor sit amet,consetetur sadipscing elitr,
-                    seddiam nonu eirmod tempor invidunt labore.
+                    Powered by cutting-edge AI, enjoy translations that preserve
+                    meaning, formatting, and context.
                   </p>
                   <a className="more" href="javascript:void(0)">
-                    Learn More <i className="lni lni-chevron-right"> </i>
+                    Learn More <i className="lni lni-chevron-right"></i>
                   </a>
                 </div>
               </div>
-              {/* single services */}
             </div>
-            <div className="col-lg-4 col-md-7 col-sm-8">
+
+            <div className="col-lg-3 col-md-7 col-sm-8">
+              <div
+                className="single-services text-center mt-30 wow fadeIn"
+                data-wow-duration="1s"
+                data-wow-delay="0.8s"
+              >
+                <div className="services-icon">
+                  <img
+                    className="shape"
+                    src="assets/images/services/services-shape.svg"
+                    alt="shape"
+                  />
+                  <img
+                    className="shape-1"
+                    src="assets/images/services/services-shape-4.svg"
+                    alt="shape"
+                  />
+                  <i className="lni lni-bolt-alt"></i>
+                </div>
+                <div className="services-content mt-30">
+                  <h4 className="services-title">
+                    <a href="javascript:void(0)">Handle All Document Needs</a>
+                  </h4>
+                  <p className="text">
+                    Effortlessly scan, convert, merge, and create — from ID
+                    cards to multi-page PDFs
+                  </p>
+                  <a className="more" href="javascript:void(0)">
+                    Learn More <i className="lni lni-chevron-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              className="col-lg-3 col-md-7 col-sm-8"
+              onClick={() => setIsOpen(true)}
+              style={{ cursor: "pointer" }}
+            >
               <div
                 className="single-services text-center mt-30 wow fadeIn"
                 data-wow-duration="1s"
@@ -333,29 +405,82 @@ function App() {
                     src="assets/images/services/services-shape-3.svg"
                     alt="shape"
                   />
-                  <i className="lni lni-bolt-alt"> </i>
+                  <i className="lni lni-bolt-alt"></i>
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Powerful</a>
+                    <a onClick={() => setIsOpen(true)}>QR Code with Ease</a>
                   </h4>
                   <p className="text">
-                    Lorem ipsum dolor sit amet,consetetur sadipscing elitr,
-                    seddiam nonu eirmod tempor invidunt labore.
+                    Generate QR Code or Scan them right on this webpage
+                    instantly, it doesn't get any fluent
                   </p>
-                  <a className="more" href="javascript:void(0)">
-                    Learn More <i className="lni lni-chevron-right"> </i>
+                  <a className="more" onClick={() => setIsOpen(true)}>
+                    Learn More <i className="lni lni-chevron-right"></i>
                   </a>
                 </div>
               </div>
-              {/* single services */}
             </div>
           </div>
-          {/* row */}
         </div>
-        {/* container */}
       </section>
-      {/*====== SERVICES PART ENDS ======*/}
+      {/*====== FEATURES SECTION ENDS ======*/}
+
+      {/* Modal for QR Code. */}
+      <div
+        className="modal fade"
+        tabIndex="-1"
+        ref={modalRef}
+        aria-labelledby="qrModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-3">
+            <div className="modal-header">
+              <h5 className="modal-title" id="qrModalLabel">
+                Generate QR Code
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setIsOpen(false)}
+              ></button>
+            </div>
+            <div className="modal-body">
+              <input
+                type="text"
+                className="form-control mb-3"
+                value={qrText}
+                onChange={(e) => setQrText(e.target.value)}
+                placeholder="Enter text"
+              />
+              <div className="d-flex justify-content-center bg-light p-3 rounded">
+                <div ref={qrRef}>
+                  <QRCode value={qrText} />
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer d-flex justify-content-between">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setIsOpen(false)}
+              >
+                Close
+              </button>
+
+              <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleDownload}
+        >
+          Download QR Code
+        </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <section id="about">
         {/*====== ABOUT PART START ======*/}
         <div className="about-area pt-70">
@@ -370,17 +495,16 @@ function App() {
                   <div className="section-title">
                     <div className="line" />
                     <h3 className="title">
-                      Quick &amp; Easy <span>to Use Bootstrap Template</span>
+                      All-in-One <span>Document Toolkit</span>
                     </h3>
                   </div>
                   {/* section title */}
                   <p className="text">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    seiam nonumy eirmod tempor invidunt ut labore et dolore
-                    magna aliquyam erat, sed diam voluptua. At vero eos et
-                    accusam et justo duo dolores et ea rebum. Stet clita kasd
-                    gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                    amet. Lorem ipsum dolor sit amet, consetetur sadipscing.
+                    Say goodbye to switching between apps. With{" "}
+                    <strong>Genx PDF</strong>, you can translate PDFs or plain
+                    text, convert documents to PDF, extract text using OCR, and
+                    even create ID cards — all from one sleek, easy-to-use
+                    platform.
                   </p>
                   <a href="javascript:void(0)" className="main-btn">
                     Try it Free
@@ -394,19 +518,19 @@ function App() {
                   data-wow-duration="1s"
                   data-wow-delay="0.5s"
                 >
-                  <img src="assets/images/about/about1.svg" alt="about" />
+                  <img
+                    src="assets/images/about/about1.svg"
+                    alt="All-in-One Toolkit"
+                  />
                 </div>
-                {/* about image */}
               </div>
             </div>
-            {/* row */}
           </div>
-          {/* container */}
           <div className="about-shape-1">
             <img src="assets/images/about/about-shape-1.svg" alt="shape" />
           </div>
         </div>
-        {/*====== ABOUT PART ENDS ======*/}
+
         {/*====== ABOUT PART START ======*/}
         <div className="about-area pt-70">
           <div className="about-shape-2">
@@ -423,23 +547,19 @@ function App() {
                   <div className="section-title">
                     <div className="line" />
                     <h3 className="title">
-                      Modern design <span> with Essential Features</span>
+                      Modern Simplicity <span>with Powerful Features</span>
                     </h3>
                   </div>
-                  {/* section title */}
                   <p className="text">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    seiam nonumy eirmod tempor invidunt ut labore et dolore
-                    magna aliquyam erat, sed diam voluptua. At vero eos et
-                    accusam et justo duo dolores et ea rebum. Stet clita kasd
-                    gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                    amet. Lorem ipsum dolor sit amet, consetetur sadipscing.
+                    Whether you're merging PDFs, generating or scanning QR
+                    codes, or converting images to documents — Genx PDF handles
+                    it all in a few clicks. Designed to be intuitive for
+                    beginners and efficient for power users.
                   </p>
                   <a href="javascript:void(0)" className="main-btn">
                     Try it Free
                   </a>
                 </div>
-                {/* about content */}
               </div>
               <div className="col-lg-6 order-lg-first">
                 <div
@@ -447,16 +567,16 @@ function App() {
                   data-wow-duration="1s"
                   data-wow-delay="0.5s"
                 >
-                  <img src="assets/images/about/about2.svg" alt="about" />
+                  <img
+                    src="assets/images/about/about2.svg"
+                    alt="Modern Simplicity"
+                  />
                 </div>
-                {/* about image */}
               </div>
             </div>
-            {/* row */}
           </div>
-          {/* container */}
         </div>
-        {/*====== ABOUT PART ENDS ======*/}
+
         {/*====== ABOUT PART START ======*/}
         <div className="about-area pt-70">
           <div className="container">
@@ -470,24 +590,19 @@ function App() {
                   <div className="section-title">
                     <div className="line" />
                     <h3 className="title">
-                      <span>Crafted for</span> SaaS, App and Software Landing
-                      Page
+                      Built for <span>Productivity and Speed</span>
                     </h3>
                   </div>
-                  {/* section title */}
                   <p className="text">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    seiam nonumy eirmod tempor invidunt ut labore et dolore
-                    magna aliquyam erat, sed diam voluptua. At vero eos et
-                    accusam et justo duo dolores et ea rebum. Stet clita kasd
-                    gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-                    amet. Lorem ipsum dolor sit amet, consetetur sadipscing.
+                    Genx PDF is crafted for everyday users, students,
+                    professionals, and teams. It brings together the essential
+                    tools you need — without the clutter. Everything runs fast,
+                    smooth, and online — no installation required.
                   </p>
                   <a href="javascript:void(0)" className="main-btn">
                     Try it Free
                   </a>
                 </div>
-                {/* about content */}
               </div>
               <div className="col-lg-6">
                 <div
@@ -495,144 +610,20 @@ function App() {
                   data-wow-duration="1s"
                   data-wow-delay="0.5s"
                 >
-                  <img src="assets/images/about/about3.svg" alt="about" />
+                  <img
+                    src="assets/images/about/about3.svg"
+                    alt="Built for Productivity"
+                  />
                 </div>
-                {/* about image */}
               </div>
             </div>
-            {/* row */}
           </div>
-          {/* container */}
           <div className="about-shape-1">
             <img src="assets/images/about/about-shape-1.svg" alt="shape" />
           </div>
         </div>
-        {/*====== ABOUT PART ENDS ======*/}
       </section>
-      {/*====== VIDEO COUNTER PART START ======*/}
-      <section id="facts" className="video-counter pt-70">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 order-lg-last">
-              <div
-                className="counter-wrapper mt-50 wow fadeIn"
-                data-wow-duration="1s"
-                data-wow-delay="0.8s"
-              >
-                <div className="counter-content">
-                  <div className="section-title">
-                    <div className="line" />
-                    <h3 className="title">
-                      Cool facts <span> about this app</span>
-                    </h3>
-                  </div>
-                  {/* section title */}
-                  <p className="text">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                    seiam nonumy eirmod tempor invidunt ut labore et dolore
-                    magna aliquyam erat, sed diam voluptua.
-                  </p>
-                </div>
-                {/* counter content */}
-                <div className="row no-gutters">
-                  <div className="col-4">
-                    <div
-                      className="
-                single-counter
-                counter-color-1
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-                    >
-                      <div className="counter-items text-center">
-                        <span
-                          className="count countup text-uppercase"
-                          cup-end={125}
-                        />
-                        <p className="text">Downloads</p>
-                      </div>
-                    </div>
-                    {/* single counter */}
-                  </div>
-                  <div className="col-4">
-                    <div
-                      className="
-                single-counter
-                counter-color-2
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-                    >
-                      <div className="counter-items text-center">
-                        <span
-                          className="count countup text-uppercase"
-                          cup-end={87}
-                        />
-                        <p className="text">Active Users</p>
-                      </div>
-                    </div>
-                    {/* single counter */}
-                  </div>
-                  <div className="col-4">
-                    <div
-                      className="
-                single-counter
-                counter-color-3
-                d-flex
-                align-items-center
-                justify-content-center
-              "
-                    >
-                      <div className="counter-items text-center">
-                        <span
-                          className="count countup text-uppercase"
-                          cup-end={59}
-                        />
-                        <p className="text">User Rating</p>
-                      </div>
-                    </div>
-                    {/* single counter */}
-                  </div>
-                </div>
-                {/* row */}
-              </div>
-              {/* counter wrapper */}
-            </div>
-            <div className="col-lg-6">
-              <div
-                className="video-content mt-50 wow fadeIn"
-                data-wow-duration="1s"
-                data-wow-delay="0.5s"
-              >
-                <img
-                  className="dots"
-                  src="assets/images/video/dots.svg"
-                  alt="dots"
-                />
-                <div className="video-wrapper">
-                  <div className="video-image">
-                    <img src="assets/images/video/video.png" alt="video" />
-                  </div>
-                  <div className="video-icon">
-                    <a
-                      href="https://www.youtube.com/watch?v=r44RKWyfcFw"
-                      className="video-popup glightbox"
-                    >
-                      <i className="lni lni-play"> </i>
-                    </a>
-                  </div>
-                </div>
-                {/* video wrapper */}
-              </div>
-              {/* video content */}
-            </div>
-          </div>
-          {/* row */}
-        </div>
-        {/* container */}
-      </section>
+
       {/*====== VIDEO COUNTER PART ENDS ======*/}
       {/*====== FOOTER PART START ======*/}
       <footer id="footer" className="footer-area pt-120">
