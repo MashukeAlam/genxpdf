@@ -36,7 +36,7 @@ export default function QrScannerModal() {
           const cameraId = devices[0].id;
           html5QrCode
             .start(
-              cameraId,
+              { facingMode: "environment" },
               {
                 fps: 10,
                 qrbox: 250,
