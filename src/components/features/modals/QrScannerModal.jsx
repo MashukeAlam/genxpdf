@@ -16,13 +16,16 @@ export default function QrScannerModal() {
 
   useEffect(() => {
     // Only start when the modal is open
-    if (!isOpen) return;
+    if (!isOpen) {
+      setScannerReady(false);
+      return;
+    };
 
     setScannerReady(true);
   }, [isOpen]);
 
   useEffect(() => {
-    if (!scannerReady && !isOpen) return;
+    if (!scannerReady || !isOpen) return;
 
     const html5QrCode = new Html5Qrcode("qr-scanner-region");
     scannerRef.current = html5QrCode;
