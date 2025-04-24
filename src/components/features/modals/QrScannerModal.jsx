@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Html5Qrcode } from "html5-qrcode";
 import { useQrScanner } from "../QrScannerContext";
-import { QrReader } from "@blackbox-vision/react-qr-reader";
 
 export default function QrScannerModal() {
   const {
@@ -11,23 +11,69 @@ export default function QrScannerModal() {
     setIsOpen,
   } = useQrScanner();
 
-  const handleResult = (result, error) => {
-    if (!!result) {
-      setQrText(result?.text || result); // sometimes result is a string
-    }
+  const scannerRef = useRef(null);
+  const [scannerReady, setScannerReady] = useState(false);
 
-    if (!!error) {
-      console.error("QR Scan Error:", error);
-    }
-  };
+  useEffect(() => {
+    // Only start when the modal is open
+    if (!isOpen) return;
+
+    setScannerReady(true);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!scannerReady && !isOpen) return;
+
+    const html5QrCode = new Html5Qrcode("qr-scanner-region");
+    scannerRef.current = html5QrCode;
+
+    Html5Qrcode.getCameras()
+      .then((devices) => {
+        if (devices && devices.length) {
+          const cameraId = devices[0].id;
+          html5QrCode
+            .start(
+              cameraId,
+              {
+                fps: 10,
+                qrbox: 250,
+              },
+              (decodedText) => {
+                setQrText(decodedText);
+              },
+              (errorMessage) => {
+                console.warn("QR decode error:", errorMessage);
+              }
+            )
+            .catch((err) => {
+              console.error("Start error:", err);
+            });
+        } else {
+          alert("No cameras found.");
+        }
+      })
+      .catch((err) => {
+        console.error("Camera error:", err);
+        alert("Unable to access camera.");
+      });
+
+    return () => {
+      if (scannerRef.current) {
+        scannerRef.current.stop().then(() => {
+          scannerRef.current.clear();
+        });
+      }
+    };
+  }, [scannerReady, setQrText]);
 
   return (
     <div
-      className="modal fade"
+      className={`modal fade ${isOpen ? "show d-block" : ""}`}
       tabIndex="-1"
       ref={modalRef}
       aria-labelledby="qrModalLabelScanner"
-      aria-hidden="true"
+      aria-hidden={!isOpen}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
     >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content p-3">
@@ -43,22 +89,14 @@ export default function QrScannerModal() {
           </div>
           <div className="modal-body">
             <div className="mb-3 text-center">
-              <QrReader
-                constraints={{
-                  video: {
-                    facingMode: "environment", // Use back camera if available
-                    width: { ideal: 1280 }, // Ideal width of the video stream
-                    height: { ideal: 720 }, // Ideal height of the video stream
-                  },
-                }}
-                onResult={handleResult}
-                containerStyle={{
+              <div
+                id="qr-scanner-region"
+                style={{
                   width: "100%",
-                  height: "auto",
-                  backgroundColor: "black", // Ensure a visible background
+                  height: "300px",
+                  backgroundColor: "black",
                 }}
-                videoStyle={{ width: "100%" }}
-              />
+              ></div>
             </div>
             <div>
               <label>Scanned Result:</label>
