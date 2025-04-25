@@ -3,13 +3,7 @@ import { Html5Qrcode } from "html5-qrcode";
 import { useQrScanner } from "../QrScannerContext";
 
 export default function QrScannerModal() {
-  const {
-    isOpen,
-    modalRef,
-    qrText,
-    setQrText,
-    setIsOpen,
-  } = useQrScanner();
+  const { isOpen, modalRef, qrText, setQrText, setIsOpen } = useQrScanner();
 
   const scannerRef = useRef(null);
   const [scannerReady, setScannerReady] = useState(false);
@@ -19,7 +13,7 @@ export default function QrScannerModal() {
     if (!isOpen) {
       setScannerReady(false);
       return;
-    };
+    }
 
     setScannerReady(true);
   }, [isOpen]);
@@ -96,7 +90,7 @@ export default function QrScannerModal() {
                 id="qr-scanner-region"
                 style={{
                   width: "100%",
-                  height: "300px",
+                  height: "100%",
                   backgroundColor: "black",
                 }}
               ></div>

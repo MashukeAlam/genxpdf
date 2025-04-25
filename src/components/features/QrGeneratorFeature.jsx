@@ -1,11 +1,6 @@
-import React, { createContext, useContext, useRef, useState, useMemo, useEffect } from "react";
-import QrGeneratorModal from "./modals/QrGeneratorModal";
-import * as htmlToImage from "html-to-image";
-import { useQrGenerator } from "./QrGeneratorContext"; // Correct hook import
+import React from "react";
 
 function QrCard() {
-  const { isOpen, modalRef, qrText, setQrText, qrRef, handleDownload, setIsOpen } = useQrGenerator();
-
   return (
     <div className="col-lg-3 col-md-7 col-sm-8" onClick={() => {
       const target = document.getElementById("qr");

@@ -30,9 +30,7 @@ const modalRef = useRef(null);
       });
   };
 
-  useEffect(() => {
-    console.log(9090, qrRef, modalRef);
-    
+  useEffect(() => {    
     if (!modalRef.current) return;
     const bootstrap = window.bootstrap;
     if (!bootstrap) return;

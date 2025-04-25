@@ -1,4 +1,3 @@
-
 import "./App.css";
 import "./assets/css/bootstrap.min.css";
 import "./assets/css/animate.css";
@@ -14,25 +13,27 @@ import { QrGeneratorProvider } from "./components/features/QrGeneratorContext";
 import { QrScannerProvider } from "./components/features/QrScannerContext";
 import QrGeneratorModal from "./components/features/modals/QrGeneratorModal";
 import QrScannerModal from "./components/features/modals/QrScannerModal";
-
-
+import { IdScannerProvider } from "./components/IdScannerContext";
+import IdScannerModal from "./components/features/modals/IdScannerModal";
 
 function App() {
-  
   return (
     <>
       <Preloader />
       <Header />
       <Branding />
-      <QrScannerProvider>
-        <QrGeneratorProvider>
-          <Features />
-          <QrGeneratorModal />
-          <QrScannerModal />
-          <About />
-        </QrGeneratorProvider>
-      </QrScannerProvider>
-      
+      <IdScannerProvider>
+        <QrScannerProvider>
+          <QrGeneratorProvider>
+            <Features />
+            <QrGeneratorModal />
+            <QrScannerModal />
+            <IdScannerModal />
+            <About />
+          </QrGeneratorProvider>
+        </QrScannerProvider>
+      </IdScannerProvider>
+
       {/*====== VIDEO COUNTER PART ENDS ======*/}
       {/*====== FOOTER PART START ======*/}
       <footer id="footer" className="footer-area pt-120">
