@@ -13,26 +13,36 @@ import { QrGeneratorProvider } from "./components/features/QrGeneratorContext";
 import { QrScannerProvider } from "./components/features/QrScannerContext";
 import QrGeneratorModal from "./components/features/modals/QrGeneratorModal";
 import QrScannerModal from "./components/features/modals/QrScannerModal";
-import { IdScannerProvider } from "./components/IdScannerContext";
+import { IdScannerProvider } from "./components/features/IdScannerContext";
 import IdScannerModal from "./components/features/modals/IdScannerModal";
+import AuthModal from "./components/features/modals/AuthModal";
+import { AuthProvider } from "./components/features/AuthContext";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
+  const googleClientSecret = import.meta.env.VITE_CLIENT_SECRET;
+  const googleClientId = import.meta.env.VITE_CLIENT_ID;
   return (
     <>
       <Preloader />
-      <Header />
-      <Branding />
-      <IdScannerProvider>
-        <QrScannerProvider>
-          <QrGeneratorProvider>
-            <Features />
-            <QrGeneratorModal />
-            <QrScannerModal />
-            <IdScannerModal />
-            <About />
-          </QrGeneratorProvider>
-        </QrScannerProvider>
-      </IdScannerProvider>
+      <GoogleOAuthProvider clientId={googleClientId}>
+        <AuthProvider>
+          <IdScannerProvider>
+            <QrScannerProvider>
+              <QrGeneratorProvider>
+                <Header />
+                <Branding />
+                <Features />
+                <QrGeneratorModal />
+                <QrScannerModal />
+                <IdScannerModal />
+                <AuthModal />
+                <About />
+              </QrGeneratorProvider>
+            </QrScannerProvider>
+          </IdScannerProvider>
+        </AuthProvider>
+      </GoogleOAuthProvider>
 
       {/*====== VIDEO COUNTER PART ENDS ======*/}
       {/*====== FOOTER PART START ======*/}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useQrGenerator } from "./features/QrGeneratorContext";
 import { useQrScanner } from "./features/QrScannerContext";
-import { useIdScanner } from "./IdScannerContext";
+import { useIdScanner } from "./features/IdScannerContext";
 
 export default function About() {
   const { setIsOpen: setGeneratorIsOpen } = useQrGenerator();
@@ -184,7 +184,7 @@ export default function About() {
                 data-wow-delay="0.5s"
               >
                 <img
-                  src="assets/images/about/qr-generate.svg"
+                  src="assets/images/about/about1.svg"
                   alt="QR Code Generator"
                 />
               </div>
@@ -232,7 +232,7 @@ export default function About() {
                 data-wow-delay="0.5s"
               >
                 <img
-                  src="assets/images/about/qr-generate.svg"
+                  src="assets/images/about/about2.svg"
                   alt="QR Code Generator"
                 />
               </div>
@@ -275,7 +275,7 @@ export default function About() {
                 data-wow-delay="0.5s"
               >
                 <img
-                  src="assets/images/about/qr-scan.svg"
+                  src="assets/images/about/about3.svg"
                   alt="QR Code Scanner"
                 />
               </div>

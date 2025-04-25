@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useIdScanner } from "../../IdScannerContext";
+import { useIdScanner } from "../IdScannerContext";
 
 export default function IdScannerModal() {
   const {
@@ -18,16 +18,18 @@ export default function IdScannerModal() {
 
   const videoRef = useRef();
   const canvasRef = useRef();
+  const streamRef = useRef(null); // Track the stream
 
-  useEffect(() => {    
+  useEffect(() => {
     let stream;
-  
-    const startCamera = async () => {      
+
+    const startCamera = async () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "environment" },
         });
-  
+        streamRef.current = stream; // Store stream in ref
+
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           await videoRef.current.play();
@@ -36,27 +38,29 @@ export default function IdScannerModal() {
         console.error("Camera access denied or error starting camera:", err);
       }
     };
-  
-    const stopCamera = () => {      
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach(track => {
-          track.stop()
-        });
+
+    const stopCamera = () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null; // Clear the stream
+      }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null; // Clear video source
       }
     };
-  
+
     if (isOpen && !previewImage) {
       startCamera();
     } else {
       stopCamera();
     }
-  
+
     return () => {
-      stopCamera();
+      stopCamera(); // Cleanup on unmount or state change
     };
   }, [isOpen, previewImage]);
 
-  const captureImage = () => {    
+  const captureImage = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -104,12 +108,24 @@ export default function IdScannerModal() {
         link.href = merged;
         link.download = "id_card.jpg";
         link.click();
+
+        // Reset state and stop camera
         setCapturedFront(null);
         setCapturedBack(null);
         setPreviewImage(null);
+        setIsOpen(false); // Close modal
       };
+      img2.src = capturedBack; // Ensure img2 loads
     };
+    img1.src = capturedFront; // Ensure img1 loads
+  };
 
+  // Handle close button to ensure camera stops
+  const handleClose = () => {
+    setIsOpen(false);
+    setPreviewImage(null); // Clear preview
+    setCapturedFront(null); // Optional: Reset captured images
+    setCapturedBack(null); // Optional: Reset captured images
   };
 
   return (
@@ -124,28 +140,36 @@ export default function IdScannerModal() {
         <div className="modal-content p-3">
           <div className="modal-header">
             <h5 className="modal-title">Scan {stage === "front" ? "Front" : "Back"} of ID</h5>
-            <button className="btn-close" onClick={() => setIsOpen(false)}></button>
+            <button className="btn-close" onClick={handleClose}></button>
           </div>
           <div className="modal-body text-center">
             {previewImage ? (
               <>
                 <img src={previewImage} alt="Preview" className="img-fluid mb-2" />
                 <div>
-                  <button className="btn btn-success me-2" onClick={confirmImage}>✔ Confirm</button>
-                  <button className="btn btn-danger" onClick={cancelPreview}>✖ Retake</button>
+                  <button className="btn btn-success me-2" onClick={confirmImage}>
+                    ✔ Confirm
+                  </button>
+                  <button className="btn btn-danger" onClick={cancelPreview}>
+                    ✖ Retake
+                  </button>
                 </div>
               </>
             ) : (
               <>
                 <video ref={videoRef} className="w-100 mb-2" />
-                <button className="btn btn-primary" onClick={captureImage}>Capture</button>
+                <button className="btn btn-primary" onClick={captureImage}>
+                  Capture
+                </button>
               </>
             )}
           </div>
           {capturedFront && capturedBack && (
             <div className="modal-footer d-flex justify-content-between">
               <span>Both sides captured!</span>
-              <button className="btn btn-success" onClick={createFinalImage}>Save ID Image</button>
+              <button className="btn btn-success" onClick={createFinalImage}>
+                Save ID Image
+              </button>
             </div>
           )}
           <canvas ref={canvasRef} style={{ display: "none" }} />

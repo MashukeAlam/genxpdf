@@ -19,10 +19,10 @@ function IdScannerCard() {
           />
           <img
             className="shape-1"
-            src="assets/images/services/services-shape-3.svg"
+            src="assets/images/services/services-shape-4.svg"
             alt="shape"
           />
-          <i className="lni lni-bolt-alt"></i>
+          <i className="lni lni-bolt"></i>
         </div>
         <div className="services-content mt-30">
           <h4 className="services-title">
