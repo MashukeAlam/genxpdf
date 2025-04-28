@@ -93,14 +93,13 @@ export default function Header() {
                   data-wow-duration="1.3s"
                   data-wow-delay="0.2s"
                 >
-                  Powerful. Simple. Seamless.
                 </h3>
                 <h2
                   className="header-title wow fadeInUp"
                   data-wow-duration="1.3s"
                   data-wow-delay="0.5s"
                 >
-                  Your Documents, Done Right — with{" "}
+                  Your Ultimate Document Toolkit—Smarter, Faster, Easier!{" "}
                   <span className="app-name">Genx PDF</span>
                 </h2>
                 <p
@@ -108,8 +107,7 @@ export default function Header() {
                   data-wow-duration="1.3s"
                   data-wow-delay="0.8s"
                 >
-                  Create, convert, and organize PDFs faster than ever. One app
-                  to handle all your document needs with ease and elegance.
+        Translate, Merge, Scan, and Create documents seamlessly inseconds.
                 </p>
                 <a
                 onClick={() => {
@@ -120,8 +118,7 @@ export default function Header() {
                   data-wow-duration="1.3s"
                   data-wow-delay="1.1s"
                 >
-                  Get Started
-                </a>
+Try Now for Free                </a>
               </div>
               {/* header hero content */}
             </div>

@@ -26,7 +26,7 @@ function IdScannerCard() {
         </div>
         <div className="services-content mt-30">
           <h4 className="services-title">
-            <a>Handle All Document Needs</a>
+            <a>Combine PDFs swiftly with intuitive drag-and-drop</a>
           </h4>
           <p className="text">
             Effortlessly scan, convert, merge, and create — from ID cards to

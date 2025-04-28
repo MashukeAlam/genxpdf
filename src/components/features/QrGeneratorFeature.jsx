@@ -13,7 +13,7 @@ function QrCard() {
           <i className="lni lni-bolt-alt"></i>
         </div>
         <div className="services-content mt-30">
-          <h4 className="services-title"><a>QR Code with Ease</a></h4>
+          <h4 className="services-title"><a>Listen clearly; convert text to speech flawlessly.</a></h4>
           <p className="text">Generate QR Code or Scan them right on this webpage instantly.</p>
           <a className="more">Learn More <i className="lni lni-chevron-right"></i></a>
         </div>

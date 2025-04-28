@@ -40,7 +40,7 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Global Reach</a>
+                    <a href="javascript:void(0)">Instantly break language barriers in PDFs.</a>
                   </h4>
                   <p className="text">
                     Translate PDFs into over 100+ languages with ease. Break
@@ -74,7 +74,7 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Smart & Accurate</a>
+                    <a href="javascript:void(0)">Capture text effortlessly from any image</a>
                   </h4>
                   <p className="text">
                     Powered by cutting-edge AI, enjoy translations that preserve

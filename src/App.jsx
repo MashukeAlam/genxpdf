@@ -18,6 +18,7 @@ import IdScannerModal from "./components/features/modals/IdScannerModal";
 import AuthModal from "./components/features/modals/AuthModal";
 import { AuthProvider } from "./components/features/AuthContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Showoff from "./components/Showoff";
 
 function App() {
   const googleClientSecret = import.meta.env.VITE_CLIENT_SECRET;
@@ -38,6 +39,7 @@ function App() {
                 <IdScannerModal />
                 <AuthModal />
                 <About />
+                <Showoff />
               </QrGeneratorProvider>
             </QrScannerProvider>
           </IdScannerProvider>
@@ -85,9 +87,7 @@ function App() {
                     <img src="assets/images/logo/logo.svg" alt="logo" />
                   </a>
                   <p className="text">
-                    Lorem ipsum dolor sit amet consetetur sadipscing elitr,
-                    sederfs diam nonumy eirmod tempor invidunt ut labore et
-                    dolore magna aliquyam.
+                  Experience the power of technology with TechX where possibilities become realities.
                   </p>
                   <ul className="social">
                     <li>
@@ -165,7 +165,7 @@ function App() {
                         <a href="javascript:void(0)">Blog</a>
                       </li>
                       <li>
-                        <a href="javascript:void(0)">Contact</a>
+                        <a href="https://techxfuture.com/contact/">Contact</a>
                       </li>
                     </ul>
                   </div>
@@ -183,12 +183,10 @@ function App() {
                     <h4 className="title">Contact Us</h4>
                   </div>
                   <ul className="contact">
-                    <li>+809272561823</li>
-                    <li>info@gmail.com</li>
-                    <li>www.yourweb.com</li>
+                    <li>+91 70100 89010</li>
+                    <li>info@techxfuture.com</li>
                     <li>
-                      123 Stree New York City , United <br />
-                      States Of America 750.
+                    Chennai, Tamilnadu, India
                     </li>
                   </ul>
                 </div>

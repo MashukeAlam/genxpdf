@@ -23,19 +23,17 @@ export default function About() {
                 <div className="section-title">
                   <div className="line" />
                   <h3 className="title">
-                    All-in-One <span>Document Toolkit</span>
+                    Powerful Solutions, <span>Effortlessly Simple!</span>
                   </h3>
                 </div>
                 {/* section title */}
                 <p className="text">
-                  Say goodbye to switching between apps. With{" "}
-                  <strong>Genx PDF</strong>, you can translate PDFs or plain
-                  text, convert documents to PDF, extract text using OCR, and
-                  even create ID cards — all from one sleek, easy-to-use
-                  platform.
+                  Break language barriers, turn images to words, or merge your
+                  documents seamlessly. Unlock productivity instantly—because
+                  your time matters.
                 </p>
                 <a href="javascript:void(0)" className="main-btn">
-                  Try it Free
+                  Start Now – It’s Free!{" "}
                 </a>
               </div>
               {/* about content */}
@@ -75,17 +73,16 @@ export default function About() {
                 <div className="section-title">
                   <div className="line" />
                   <h3 className="title">
-                    Modern Simplicity <span>with Powerful Features</span>
+                    Simplify Your Digital <span>Life with Innovation!</span>
                   </h3>
                 </div>
                 <p className="text">
-                  Whether you're merging PDFs, generating or scanning QR codes,
-                  or converting images to documents — Genx PDF handles it all in
-                  a few clicks. Designed to be intuitive for beginners and
-                  efficient for power users.
+                  "Experience clarity like never before. From smart document
+                  handling to instant translations—everything perfectly tailored
+                  to boost your efficiency.
                 </p>
                 <a href="javascript:void(0)" className="main-btn">
-                  Try it Free
+                  Explore Features
                 </a>
               </div>
             </div>
@@ -118,17 +115,16 @@ export default function About() {
                 <div className="section-title">
                   <div className="line" />
                   <h3 className="title">
-                    Built for <span>Productivity and Speed</span>
+                    Built for <span>Achievers</span>
                   </h3>
                 </div>
                 <p className="text">
-                  Genx PDF is crafted for everyday users, students,
-                  professionals, and teams. It brings together the essential
-                  tools you need — without the clutter. Everything runs fast,
-                  smooth, and online — no installation required.
+                  Turn your ideas into reality. Effortlessly create, translate,
+                  and organize your documentsand content—letting you focus on
+                  what matters most
                 </p>
                 <a href="javascript:void(0)" className="main-btn">
-                  Try it Free
+                  Make it Happen!
                 </a>
               </div>
             </div>
@@ -163,11 +159,12 @@ export default function About() {
                 <div className="section-title">
                   <div className="line" />
                   <h3 className="title">
-                  Scan IDs in <span>Seconds</span>
+                    Scan IDs in <span>Seconds</span>
                   </h3>
                 </div>
                 <p className="text">
-                Capture both sides, verify instantly, and export a single image — all from your browser.
+                  Capture both sides, verify instantly, and export a single
+                  image — all from your browser.
                 </p>
                 <a
                   className="main-btn"
@@ -195,7 +192,6 @@ export default function About() {
           <img src="assets/images/about/about-shape-1.svg" alt="shape" />
         </div>
       </div>
-
 
       <div id="qr" className="about-area pt-70">
         <div className="container">
