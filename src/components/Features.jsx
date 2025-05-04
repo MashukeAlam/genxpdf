@@ -5,7 +5,7 @@ import IdScannerFeature from './features/IdScannerFeature'
 export default function Features() {
   return (
     <>
-    <section id="features" className="services-area pt-120">
+      <section id="features" className="services-area pt-120">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
@@ -40,11 +40,10 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Instantly break language barriers in PDFs.</a>
+                    <a href="javascript:void(0)">PDF Translator</a>
                   </h4>
                   <p className="text">
-                    Translate PDFs into over 100+ languages with ease. Break
-                    barriers and communicate globally with just a tap.
+                    Instantly break language barriers in PDFs
                   </p>
                   <a className="more" href="javascript:void(0)">
                     Learn More <i className="lni lni-chevron-right"></i>
@@ -74,11 +73,10 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Capture text effortlessly from any image</a>
+                    <a href="javascript:void(0)">OCR (Image to Text)</a>
                   </h4>
                   <p className="text">
-                    Powered by cutting-edge AI, enjoy translations that preserve
-                    meaning, formatting, and context.
+                    Capture text effortlessly from any image
                   </p>
                   <a className="more" href="javascript:void(0)">
                     Learn More <i className="lni lni-chevron-right"></i>
@@ -87,11 +85,78 @@ export default function Features() {
               </div>
             </div>
 
-            <IdScannerFeature />
-            <QrGeneratorFeature />
+            <div className="col-lg-3 col-md-7 col-sm-8">
+              <div
+                className="single-services text-center mt-30 wow fadeIn"
+                data-wow-duration="1s"
+                data-wow-delay="0.5s"
+              >
+                <div className="services-icon">
+                  <img
+                    className="shape"
+                    src="assets/images/services/services-shape.svg"
+                    alt="shape"
+                  />
+                  <img
+                    className="shape-1"
+                    src="assets/images/services/services-shape-3.svg"
+                    alt="shape"
+                  />
+                  <i className="lni lni-cog"></i>
+                </div>
+                <div className="services-content mt-30">
+                  <h4 className="services-title">
+                    <a href="javascript:void(0)">PDF Merge</a>
+                  </h4>
+                  <p className="text">
+                    Combine PDFs swiftly with intuitive drag-and-drop
+                  </p>
+                  <a className="more" href="javascript:void(0)">
+                    Learn More <i className="lni lni-chevron-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div className="col-lg-3 col-md-7 col-sm-8">
+              <div
+                className="single-services text-center mt-30 wow fadeIn"
+                data-wow-duration="1s"
+                data-wow-delay="0.5s"
+              >
+                <div className="services-icon">
+                  <img
+                    className="shape"
+                    src="assets/images/services/services-shape.svg"
+                    alt="shape"
+                  />
+                  <img
+                    className="shape-1"
+                    src="assets/images/services/services-shape-4.svg"
+                    alt="shape"
+                  />
+                  <i className="lni lni-cog"></i>
+                </div>
+                <div className="services-content mt-30">
+                  <h4 className="services-title">
+                    <a href="javascript:void(0)">Text-to-Speech Translator</a>
+                  </h4>
+                  <p className="text">
+                    Listen clearly; convert text to speech flawlessly
+                  </p>
+                  <a className="more" href="javascript:void(0)">
+                    Learn More <i className="lni lni-chevron-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* <IdScannerFeature />
+            <QrGeneratorFeature /> */}
           </div>
         </div>
       </section>
-      </>
+    </>
   )
 }

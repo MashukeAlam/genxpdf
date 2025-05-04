@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "./features/AuthContext";
 
 export default function Header() {
-  const {setIsOpen, username} = useAuth();
+  const { setIsOpen, username } = useAuth();
   return (
     <header className="header-area">
       <div className="navbar-area">
@@ -52,23 +52,23 @@ export default function Header() {
                 <div className="navbar-btn d-none d-sm-inline-block">
                   {username.current ? (
                     <a
-                    className="main-btn"
-                    data-scroll-nav={0}
-                    rel="nofollow"
-                  >
-                    {username.current}
-                  </a>
+                      className="main-btn"
+                      data-scroll-nav={0}
+                      rel="nofollow"
+                    >
+                      {username.current}
+                    </a>
                   ) : (
                     <a
-                    className="main-btn"
-                    data-scroll-nav={0}
-                    onClick={() => setIsOpen(true)}
-                    rel="nofollow"
-                  >
-                    Join
-                  </a>
+                      className="main-btn"
+                      data-scroll-nav={0}
+                      onClick={() => setIsOpen(true)}
+                      rel="nofollow"
+                    >
+                      Join
+                    </a>
                   )}
-                  
+
                 </div>
               </nav>
               {/* navbar */}
@@ -107,18 +107,18 @@ export default function Header() {
                   data-wow-duration="1.3s"
                   data-wow-delay="0.8s"
                 >
-        Translate, Merge, Scan, and Create documents seamlessly inseconds.
+                  Translate, Merge, Scan, and Create documents seamlessly inseconds.
                 </p>
                 <a
-                onClick={() => {
-                  const target = document.getElementById("features");
-                  if (target) target.scrollIntoView({ behavior: "smooth" });
-                }}
+                  onClick={() => {
+                    const target = document.getElementById("features");
+                    if (target) target.scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="main-btn wow fadeInUp"
                   data-wow-duration="1.3s"
                   data-wow-delay="1.1s"
                 >
-Try Now for Free                </a>
+                  Try Now for Free                </a>
               </div>
               {/* header hero content */}
             </div>
@@ -131,7 +131,7 @@ Try Now for Free                </a>
                 data-wow-duration="1.3s"
                 data-wow-delay="1.4s"
               >
-                <img src="assets/images/header/header-hero.png" alt="hero" />
+                <div style={{ height: "400px" }} /> {/* Adjust height as needed */}
               </div>
               {/* header hero image */}
             </div>

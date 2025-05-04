@@ -32,7 +32,6 @@ function App() {
             <QrScannerProvider>
               <QrGeneratorProvider>
                 <Header />
-                <Branding />
                 <Features />
                 <QrGeneratorModal />
                 <QrScannerModal />
@@ -84,7 +83,7 @@ function App() {
                   data-wow-delay="0.2s"
                 >
                   <a className="logo" href="javascript:void(0)">
-                    <img src="assets/images/logo/logo.svg" alt="logo" />
+                    <img src="assets/images/logo/company-logo.png" alt="logo" />
                   </a>
                   <p className="text">
                   Experience the power of technology with TechX where possibilities become realities.
@@ -125,25 +124,25 @@ function App() {
                       <h4 className="title">Quick Link</h4>
                     </div>
                     <ul className="link">
-                      <li>
+                      {/* <li>
                         <a href="javascript:void(0)">Road Map</a>
-                      </li>
+                      </li> */}
                       <li>
-                        <a href="javascript:void(0)">Privacy Policy</a>
+                        <a href="https://techxfuture.com/privacy-policy/">Privacy Policy</a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a href="javascript:void(0)">Refund Policy</a>
-                      </li>
+                      </li> */}
                       <li>
-                        <a href="javascript:void(0)">Terms of Service</a>
+                        <a href="http://techxfuture.com/terms-conditions/">Terms of Service</a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a href="javascript:void(0)">Pricing</a>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                   {/* footer wrapper */}
-                  <div
+                  {/* <div
                     className="link-wrapper wow fadeIn"
                     data-wow-duration="1s"
                     data-wow-delay="0.6s"
@@ -168,7 +167,7 @@ function App() {
                         <a href="https://techxfuture.com/contact/">Contact</a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   {/* footer wrapper */}
                 </div>
                 {/* footer link */}
@@ -201,12 +200,7 @@ function App() {
               <div className="col-lg-12">
                 <div className="copyright d-sm-flex justify-content-between">
                   <div className="copyright-content">
-                    <p className="text">
-                      Designed and Developed by
-                      <a href="https://uideck.com" rel="nofollow">
-                        UIdeck
-                      </a>
-                    </p>
+                    
                   </div>
                   {/* copyright content */}
                 </div>

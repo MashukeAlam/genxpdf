@@ -146,7 +146,7 @@ export default function About() {
           <img src="assets/images/about/about-shape-1.svg" alt="shape" />
         </div>
       </div>
-
+{/* 
       <div id="idscan" className="about-area pt-70">
         <div className="container">
           <div className="row flex-lg-row-reverse">
@@ -281,7 +281,7 @@ export default function About() {
         <div className="about-shape-1">
           <img src="assets/images/about/about-shape-1.svg" alt="shape" />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
