@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "./features/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { setIsOpen, username } = useAuth();
@@ -109,16 +110,14 @@ export default function Header() {
                 >
                   Translate, Merge, Scan, and Create documents seamlessly inseconds.
                 </p>
-                <a
-                  onClick={() => {
-                    const target = document.getElementById("features");
-                    if (target) target.scrollIntoView({ behavior: "smooth" });
-                  }}
+                <Link
+                  to="/features"
                   className="main-btn wow fadeInUp"
                   data-wow-duration="1.3s"
                   data-wow-delay="1.1s"
                 >
-                  Try Now for Free                </a>
+                  Try Now for Free
+                </Link>
               </div>
               {/* header hero content */}
             </div>

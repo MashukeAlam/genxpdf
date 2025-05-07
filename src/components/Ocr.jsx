@@ -1,0 +1,139 @@
+import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+
+export default function Ocr() {
+  const [file, setFile] = useState(null);
+  const [ocrText, setOcrText] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && ['image/png', 'image/jpeg', 'image/jpg'].includes(droppedFile.type)) {
+      setFile(droppedFile);
+      setOcrText('');
+    } else {
+      alert('Please drop a valid image file (.png, .jpg, .jpeg).');
+    }
+  };
+
+  const handleFileInput = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && ['image/png', 'image/jpeg', 'image/jpg'].includes(selectedFile.type)) {
+      setFile(selectedFile);
+      setOcrText('');
+    } else {
+      alert('Please select a valid image file (.png, .jpg, .jpeg).');
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!file) {
+      alert('Please upload an image file first.');
+      return;
+    }
+
+    // Simulate API call to dummy OCR endpoint
+    try {
+      // Mock API response
+      const mockResponse = {
+        extractedText: `Extracted text from ${file.name}. This is a mock OCR result.`,
+      };
+
+      // Simulate network delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setOcrText(mockResponse.extractedText);
+    } catch (error) {
+      alert('Error processing OCR. Please try again.');
+    }
+  };
+
+  const handleDownload = () => {
+    if (!ocrText) return;
+
+    // Create a downloadable text file
+    const blob = new Blob([ocrText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ocr_result.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div
+      className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex items-center justify-center p-8 overflow-hidden"
+    >
+      <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
+        <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">OCR (Image to Text)</h1>
+        <div
+          className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
+            isDragging ? 'border-blue-500 bg-blue-100/50' : 'border-blue-300'
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <p className="text-gray-700 mb-2">
+            {file ? file.name : 'Drag and drop an image file here'}
+          </p>
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/jpg"
+            ref={fileInputRef}
+            onChange={handleFileInput}
+            className="hidden"
+          />
+          <button
+            onClick={() => fileInputRef.current.click()}
+            className="text-blue-500 hover:underline"
+          >
+            Or click to select
+          </button>
+        </div>
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 mb-4"
+          disabled={!file}
+        >
+          Process OCR
+        </button>
+        {ocrText && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold text-blue-900 mb-2">Extracted Text:</h3>
+            <textarea
+              className="w-full h-24 p-3 border border-blue-300 rounded-lg mb-4 text-gray-700 bg-white/50"
+              value={ocrText}
+              readOnly
+            />
+            <button
+              onClick={handleDownload}
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+            >
+              Download Text
+            </button>
+          </div>
+        )}
+        <Link
+          to="/"
+          className="mt-4 inline-block text-blue-500 hover:underline text-sm text-center w-full"
+        >
+          Back to Home
+        </Link>
+      </div>
+    </div>
+  );
+}

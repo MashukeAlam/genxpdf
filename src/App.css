@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 } */
+
+.glassmorphic {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.backdrop {
+  background: linear-gradient(135deg, #1e3a8a, #6b7280);
+  min-height: 100vh;
+}
+
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15);
+  border-color: #ffc107;
+}
+
+.feature-card:hover .card-title {
+  color: #ffc107;
+}
+
+.feature-card:hover .card-text {
+  color: #e0e0e0;
+}
+
