@@ -12,8 +12,11 @@ export default function Header() {
             <div className="col-lg-12">
               <nav className="navbar navbar-expand-lg">
                 <a className="navbar-brand" href="index.html">
-                  <img src="assets/images/logo/logo.svg" alt="Logo" />
-                </a>
+                <img
+          src="assets/images/logo/company-logo.png"
+          alt="Logo"
+          className="w-32 h-8 mb-4 text-animate"
+        />                </a>
                 <button
                   className="navbar-toggler"
                   type="button"

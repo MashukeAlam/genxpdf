@@ -2,6 +2,7 @@ import React from "react";
 import { useQrGenerator } from "./features/QrGeneratorContext";
 import { useQrScanner } from "./features/QrScannerContext";
 import { useIdScanner } from "./features/IdScannerContext";
+import { Link } from "react-router-dom";
 
 export default function About() {
   const { setIsOpen: setGeneratorIsOpen } = useQrGenerator();
@@ -32,9 +33,9 @@ export default function About() {
                   documents seamlessly. Unlock productivity instantly—because
                   your time matters.
                 </p>
-                <a href="javascript:void(0)" className="main-btn">
+                <Link to="/features" className="main-btn">
                   Start Now – It’s Free!{" "}
-                </a>
+                </Link>
               </div>
               {/* about content */}
             </div>
@@ -81,9 +82,9 @@ export default function About() {
                   handling to instant translations—everything perfectly tailored
                   to boost your efficiency.
                 </p>
-                <a href="javascript:void(0)" className="main-btn">
+                <Link to="/features" className="main-btn">
                   Explore Features
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-6 order-lg-first">
@@ -123,9 +124,9 @@ export default function About() {
                   and organize your documentsand content—letting you focus on
                   what matters most
                 </p>
-                <a href="javascript:void(0)" className="main-btn">
+                <Link to="/features" className="main-btn">
                   Make it Happen!
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-6">
