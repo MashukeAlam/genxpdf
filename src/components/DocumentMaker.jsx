@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { PDFDocument, rgb } from 'pdf-lib';
 
 export default function DocumentMaker() {
   const [files, setFiles] = useState([]);
@@ -54,24 +55,45 @@ export default function DocumentMaker() {
       alert('Please upload at least one image file.');
       return;
     }
-
-    // Simulate API call to dummy PDF conversion endpoint
+  
     try {
-      // Mock API response
-      const mockGeneratedFile = {
-        fileName: 'converted_document.pdf',
-        content: `Mock PDF content generated from ${files.length} images with ${quality} quality and ${layout} layout.`,
-      };
-
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Create a downloadable file (mocked as a text file for simplicity)
-      const blob = new Blob([mockGeneratedFile.content], { type: 'application/pdf' });
+      const pdfDoc = await PDFDocument.create();
+  
+      for (let file of files) {
+        const imgBytes = await file.arrayBuffer();
+        let img;
+        let dims;
+  
+        // Detect image type and embed
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+          img = await pdfDoc.embedJpg(imgBytes);
+        } else if (file.type === 'image/png') {
+          img = await pdfDoc.embedPng(imgBytes);
+        } else {
+          alert(`Unsupported file type: ${file.type}`);
+          continue;
+        }
+  
+        dims = img.scale(1); // 100% scale
+  
+        const page = pdfDoc.addPage([dims.width, dims.height]);
+        page.drawImage(img, {
+          x: 0,
+          y: 0,
+          width: dims.width,
+          height: dims.height,
+        });
+      }
+  
+      const pdfBytes = await pdfDoc.save();
+  
+      // Create blob and trigger download
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setGeneratedPdfUrl(url);
     } catch (error) {
-      alert('Error converting images to PDF. Please try again.');
+      console.error(error);
+      alert('Error creating PDF');
     }
   };
 

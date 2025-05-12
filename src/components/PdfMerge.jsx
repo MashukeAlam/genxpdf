@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { PDFDocument } from 'pdf-lib';
 
 export default function PdfMerge() {
   const [files, setFiles] = useState([]);
@@ -52,24 +53,28 @@ export default function PdfMerge() {
       alert('Please upload at least two PDF files to merge.');
       return;
     }
-
-    // Simulate API call to dummy merge endpoint
+  
     try {
-      // Mock API response
-      const mockMergedFile = {
-        fileName: 'merged_output.pdf',
-        content: 'This is a mock merged PDF content.', // Placeholder for actual PDF content
-      };
-
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Create a downloadable file (mocked as a text file for simplicity)
-      const blob = new Blob([mockMergedFile.content], { type: 'application/pdf' });
+      const mergedPdf = await PDFDocument.create();
+  
+      for (const file of files) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+  
+        copiedPages.forEach((page) => {
+          mergedPdf.addPage(page);
+        });
+      }
+  
+      const mergedBytes = await mergedPdf.save();
+      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
+  
       setMergedFileUrl(url);
     } catch (error) {
       alert('Error merging PDFs. Please try again.');
+      console.error(error);
     }
   };
 

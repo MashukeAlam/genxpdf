@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import Tesseract from 'tesseract.js';
 
 export default function Ocr() {
   const [file, setFile] = useState(null);
@@ -52,9 +53,9 @@ export default function Ocr() {
       };
 
       // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const tesseractResponse = await Tesseract.recognize(file);      
 
-      setOcrText(mockResponse.extractedText);
+      setOcrText(tesseractResponse.data.text);
     } catch (error) {
       alert('Error processing OCR. Please try again.');
     }
