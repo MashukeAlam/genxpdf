@@ -72,10 +72,7 @@ function App() {
       <Footer />
       {/*====== FOOTER PART ENDS ======*/}
       {/*====== BACK TOP TOP PART START ======*/}
-      <a href="#" className="back-to-top">
-        {" "}
-        <i className="lni lni-chevron-up"> </i>{" "}
-      </a>
+      
       {/*====== BACK TOP TOP PART ENDS ======*/}
       {/*====== Javascript Files ======*/}
     </>

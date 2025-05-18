@@ -94,7 +94,10 @@ export default function Footer() {
       </div>
       <div id="particles-2" />
     </footer>
-    <br />
+    <a href="#" className="back-to-top">
+        {" "}
+        <i className="lni lni-chevron-up"> </i>{" "}
+      </a>
     </>
   );
 }

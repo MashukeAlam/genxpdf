@@ -28,11 +28,12 @@
     // show or hide the back-top-top button
     const backToTop = document.querySelector(".back-to-top");
     if (
+      backToTop && 
       document.body.scrollTop > 50 ||
       document.documentElement.scrollTop > 50
     ) {
       backToTop.style.display = "flex";
-    } else {
+    } else if (backToTop){
       backToTop.style.display = "none";
     }
   };
@@ -59,11 +60,15 @@
       document.body.scrollTop;
 
     for (let i = 0; i < sections.length; i++) {
+
       const currLink = sections[i];
+      
+      
       const val = currLink.getAttribute("href");
       const refElement = document.querySelector(val);
       const scrollTopMinus = scrollPos + 73;
       if (
+        refElement &&
         refElement.offsetTop <= scrollTopMinus &&
         refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
       ) {
