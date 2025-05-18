@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { PDFDocument } from 'pdf-lib';
+import TopBar from './TopBar';
+import Footer from './Footer';
 
 export default function PdfMerge() {
   const [files, setFiles] = useState([]);
@@ -89,8 +91,9 @@ export default function PdfMerge() {
 
   return (
     <div
-      className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex items-center justify-center p-8 overflow-hidden"
+      className="bg-[url('assets/images/header/banner-bg.svg')] flex-col  bg-cover bg-center min-h-screen flex items-center justify-center p-8 overflow-hidden"
     >
+      <TopBar />
       <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
         <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">PDF Merge</h1>
         <div
@@ -167,6 +170,8 @@ export default function PdfMerge() {
           Back to Home
         </Link>
       </div>
+      <br/>
+      <Footer />
     </div>
   );
 }

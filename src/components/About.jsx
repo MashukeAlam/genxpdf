@@ -5,9 +5,9 @@ import { useIdScanner } from "./features/IdScannerContext";
 import { Link } from "react-router-dom";
 
 export default function About() {
-  const { setIsOpen: setGeneratorIsOpen } = useQrGenerator();
-  const { setIsOpen: setScannerIsOpen } = useQrScanner();
-  const { setIsOpen: setIdScannerIsOpen } = useIdScanner();
+  // const { setIsOpen: setGeneratorIsOpen } = useQrGenerator();
+  // const { setIsOpen: setScannerIsOpen } = useQrScanner();
+  // const { setIsOpen: setIdScannerIsOpen } = useIdScanner();
 
   return (
     <section id="about">

@@ -31,7 +31,7 @@ export default function Header() {
                   <span className="toggler-icon"> </span>
                 </button>
                 <div
-                  className="collapse navbar-collapse sub-menu-bar"
+                  className="navbar-collapse sub-menu-bar"
                   id="navbarSupportedContent"
                 >
                   <ul id="nav" className="navbar-nav ms-auto">
@@ -51,8 +51,7 @@ export default function Header() {
                       </a>
                     </li>
                   </ul>
-                </div>
-                {/* navbar collapse */}
+                  {/* navbar collapse */}
                 <div className="navbar-btn d-none d-sm-inline-block">
                   {username.current ? (
                     <a
@@ -74,6 +73,8 @@ export default function Header() {
                   )}
 
                 </div>
+                </div>
+                
               </nav>
               {/* navbar */}
             </div>

@@ -2,7 +2,7 @@
   "use strict";
 
   // ==== Preloader
-  window.onload = function () {
+  window.onload = function () {    
     window.setTimeout(fadeout, 500);
   };
 
