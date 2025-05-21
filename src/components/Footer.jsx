@@ -3,9 +3,9 @@ import React from 'react';
 export default function Footer() {
   return (
     <>
-    <footer id="footer" className="footer-area pt-120 full-width-footer">
+    <footer id="footer" className="footer-area pt-120 pl-20 full-width-footer">
       <div className="full-width-container">
-        <div className="footer-widget pb-100">
+        <div className="footer-widget pb-10">
           <div className="row">
             <div className="col-lg-4 col-md-6 col-sm-8">
               <div

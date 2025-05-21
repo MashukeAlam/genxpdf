@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import TopBar from './TopBar';
-import Footer from './Footer';
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import TopBar from "./TopBar";
+import Footer from "./Footer";
 
 export default function PdfTranslator() {
   const [file, setFile] = useState(null);
-  const [translatedText, setTranslatedText] = useState('');
+  const [translatedText, setTranslatedText] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -22,27 +22,27 @@ export default function PdfTranslator() {
     e.preventDefault();
     setIsDragging(false);
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type === 'application/pdf') {
+    if (droppedFile && droppedFile.type === "application/pdf") {
       setFile(droppedFile);
-      setTranslatedText('');
+      setTranslatedText("");
     } else {
-      alert('Please drop a valid PDF file.');
+      alert("Please drop a valid PDF file.");
     }
   };
 
   const handleFileInput = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type === 'application/pdf') {
+    if (selectedFile && selectedFile.type === "application/pdf") {
       setFile(selectedFile);
-      setTranslatedText('');
+      setTranslatedText("");
     } else {
-      alert('Please select a valid PDF file.');
+      alert("Please select a valid PDF file.");
     }
   };
 
   const handleSubmit = async () => {
     if (!file) {
-      alert('Please upload a PDF file first.');
+      alert("Please upload a PDF file first.");
       return;
     }
 
@@ -58,7 +58,7 @@ export default function PdfTranslator() {
 
       setTranslatedText(mockResponse.translatedText);
     } catch (error) {
-      alert('Error translating PDF. Please try again.');
+      alert("Error translating PDF. Please try again.");
     }
   };
 
@@ -66,74 +66,80 @@ export default function PdfTranslator() {
     if (!translatedText) return;
 
     // Create a downloadable text file
-    const blob = new Blob([translatedText], { type: 'text/plain' });
+    const blob = new Blob([translatedText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'translated_text.txt';
+    a.download = "translated_text.txt";
     a.click();
     URL.revokeObjectURL(url);
   };
 
   return (
-    <div
-      className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden"
-    >
-      <TopBar />
-      <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
-        <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">PDF Translator</h1>
-        <div
-          className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
-            isDragging ? 'border-blue-500 bg-blue-100/50' : 'border-blue-300'
-          }`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <p className="text-gray-700 mb-2">
-            {file ? file.name : 'Drag and drop a PDF file here'}
-          </p>
-          <input
-            type="file"
-            accept="application/pdf"
-            ref={fileInputRef}
-            onChange={handleFileInput}
-            className="hidden"
-          />
-          <button
-            onClick={() => fileInputRef.current.click()}
-            className="text-blue-500 hover:underline"
+    <>
+      <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
+        <TopBar />
+        <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
+          <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
+            PDF Translator
+          </h1>
+          <div
+            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
+              isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
+            }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
           >
-            Or click to select
-          </button>
-        </div>
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 mb-4"
-          disabled={!file}
-        >
-          Translate PDF
-        </button>
-        {translatedText && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold text-blue-900 mb-2">Translated Content:</h3>
-            <p className="text-gray-700 text-sm bg-white/50 p-4 rounded-lg">{translatedText}</p>
+            <p className="text-gray-700 mb-2">
+              {file ? file.name : "Drag and drop a PDF file here"}
+            </p>
+            <input
+              type="file"
+              accept="application/pdf"
+              ref={fileInputRef}
+              onChange={handleFileInput}
+              className="hidden"
+            />
             <button
-              onClick={handleDownload}
-              className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+              onClick={() => fileInputRef.current.click()}
+              className="text-blue-500 hover:underline"
             >
-              Download Translation
+              Or click to select
             </button>
           </div>
-        )}
-        <Link
-          to="/"
-          className="mt-4 inline-block text-blue-500 hover:underline text-sm text-center w-full"
-        >
-          Back to Home
-        </Link>
+          <button
+            onClick={handleSubmit}
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 mb-4"
+            disabled={!file}
+          >
+            Translate PDF
+          </button>
+          {translatedText && (
+            <div className="mt-4">
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                Translated Content:
+              </h3>
+              <p className="text-gray-700 text-sm bg-white/50 p-4 rounded-lg">
+                {translatedText}
+              </p>
+              <button
+                onClick={handleDownload}
+                className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+              >
+                Download Translation
+              </button>
+            </div>
+          )}
+          <Link
+            to="/"
+            className="mt-4 inline-block text-blue-500 hover:underline text-sm text-center w-full"
+          >
+            Back to Home
+          </Link>
+        </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
