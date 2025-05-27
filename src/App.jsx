@@ -49,32 +49,14 @@ function App() {
     <>
       <GoogleOAuthProvider clientId={googleClientId}>
         <AuthProvider>
-          {/* <IdScannerProvider>
-            <QrScannerProvider>
-              <QrGeneratorProvider> */}
                 <Preloader />
                 <Header />
                 <Features />
-                {/* <QrGeneratorModal />
-                <QrScannerModal />
-                <IdScannerModal /> */}
                 <AuthModal />
                 <About />
                 <Showoff />
-              {/* </QrGeneratorProvider>
-            </QrScannerProvider>
-          </IdScannerProvider> */}
         </AuthProvider>
       </GoogleOAuthProvider>
-
-      {/*====== VIDEO COUNTER PART ENDS ======*/}
-      {/*====== FOOTER PART START ======*/}
-      <Footer />
-      {/*====== FOOTER PART ENDS ======*/}
-      {/*====== BACK TOP TOP PART START ======*/}
-      
-      {/*====== BACK TOP TOP PART ENDS ======*/}
-      {/*====== Javascript Files ======*/}
     </>
   );
 }

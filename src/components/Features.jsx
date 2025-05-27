@@ -1,6 +1,7 @@
 import React from 'react'
 import QrGeneratorFeature from './features/QrGeneratorFeature'
 import IdScannerFeature from './features/IdScannerFeature'
+import { Link } from 'react-router-dom'
 
 export default function Features() {
   return (
@@ -40,14 +41,14 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">PDF Translator</a>
+                    <a href="javascript:void(0)">Amazing PDF Translator</a>
                   </h4>
                   <p className="text">
                     Instantly break language barriers in PDFs
                   </p>
-                  <a className="more" href="javascript:void(0)">
+                  <Link className="more" to="/pdf-translator">
                     Learn More <i className="lni lni-chevron-right"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -78,9 +79,9 @@ export default function Features() {
                   <p className="text">
                     Capture text effortlessly from any image
                   </p>
-                  <a className="more" href="javascript:void(0)">
+                  <Link className="more" to="/ocr">
                     Learn More <i className="lni lni-chevron-right"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -106,14 +107,14 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">PDF Merge</a>
+                    <a href="javascript:void(0)">Sppedy PDF Merger</a>
                   </h4>
                   <p className="text">
                     Combine PDFs swiftly with intuitive drag-and-drop
                   </p>
-                  <a className="more" href="javascript:void(0)">
+                  <Link className="more" to="/pdf-merge">
                     Learn More <i className="lni lni-chevron-right"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -146,9 +147,9 @@ export default function Features() {
                   <p className="text">
                     Listen clearly; convert text to speech flawlessly
                   </p>
-                  <a className="more" href="javascript:void(0)">
+                  <Link className="more" to="/text-to-speech">
                     Learn More <i className="lni lni-chevron-right"></i>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

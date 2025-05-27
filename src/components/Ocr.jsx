@@ -51,14 +51,6 @@ export default function Ocr() {
     }
   };
 
-  // const tesseractWorker = async () => {
-  //   createWorker({
-  //     langPath: path.join(__dirname, 'public', 'assets', 'lang-data'),
-  //     logger: m => console.log(m),
-      
-  //   });
-  // }
-
   const handleSubmit = async () => {
     if (!file) {
       alert("Please upload an image file first.");
