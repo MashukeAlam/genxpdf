@@ -55,6 +55,7 @@ function App() {
                 <AuthModal />
                 <About />
                 <Showoff />
+                <Footer />
         </AuthProvider>
       </GoogleOAuthProvider>
     </>
