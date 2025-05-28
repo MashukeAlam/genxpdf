@@ -1,7 +1,8 @@
 import React from 'react'
 import Filler from './Filler'
+import Breadcrumb from './Breadcrumbs'
 
-export default function TopBar() {
+export default function TopBar({breadcrumb, breadcrumbPaths}) {
   return (
     <>
     <div className="navbar-area">
@@ -30,6 +31,7 @@ export default function TopBar() {
         <span className="toggler-icon"> </span>
       </button>
     </div>
+    {breadcrumb ? <></> : 
     <div
       className=" navbar-collapse sub-menu-bar"
       id="navbarSupportedContent"
@@ -53,8 +55,13 @@ export default function TopBar() {
       </ul>
 
     </div>
+}
 
   </nav>
+  {breadcrumb ? 
+
+<Breadcrumb paths={breadcrumbPaths} />
+ : null}
   </div>
   </div>
   </div>

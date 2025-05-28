@@ -4,6 +4,7 @@ import IdScannerFeature from './features/IdScannerFeature'
 import { Link } from 'react-router-dom'
 
 export default function Features() {
+
   return (
     <>
       <section id="features" className="services-area pt-120">
@@ -107,7 +108,7 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Sppedy PDF Merger</a>
+                    <a href="javascript:void(0)">Speedy PDF Merger</a>
                   </h4>
                   <p className="text">
                     Combine PDFs swiftly with intuitive drag-and-drop

@@ -1,11 +1,10 @@
-import React from "react";
 import FeatureCard from "./FeatureCard";
-import Header from "./Header";
-import { AuthProvider } from "./features/AuthContext";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
+import { featurePaths } from "../common/breadcrumb_paths";
 
 export default function FeatureList() {
+
   const features = [
     {
       id: 1,
@@ -67,7 +66,7 @@ export default function FeatureList() {
         id="home"
         className="header-hero bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center p-8 relative overflow-hidden"
       >
-        <TopBar />
+        <TopBar breadcrumb={true} breadcrumbPaths={featurePaths} />
 
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 to-transparent"></div>
         <br></br>

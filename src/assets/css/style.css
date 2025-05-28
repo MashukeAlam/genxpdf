@@ -488,7 +488,7 @@ p {
 }
 
 .navbar {
-  padding: 25px 0;
+  padding: 12px 12px 0px 0px;
   border-radius: 5px;
   position: relative;
   -webkit-transition: all 0.3s ease-out 0s;
@@ -1262,13 +1262,15 @@ p {
   content: "";
   bottom: 0;
   left: 0;
-  height: 100%;
+  height: 73%;
   width: 100%;
-  background-image: url(../images/footer/footer-bg.svg);
-  background-position: top center;
+  background: linear-gradient(135deg, #4b6cb7, #182848); /* customize colors */
+  border-radius: 15px 15px 0px 0px;
   z-index: -1;
   background-size: cover;
+  pointer-events: none; /* optional: to make sure it doesn’t interfere with interactions */
 }
+
 
 @media only screen and (min-width: 1921px) {
   .footer-area::before {

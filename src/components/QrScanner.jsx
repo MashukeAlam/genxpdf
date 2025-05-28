@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
+import { featurePaths } from "../common/breadcrumb_paths";
+
 
 export default function QrScanner() {
   const [qrText, setQrText] = useState("");
@@ -97,7 +99,7 @@ export default function QrScanner() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col  items-center justify-center p-8 overflow-hidden">
-        <TopBar />
+        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'QR Scanner', path: '/ocr'}]}/>
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             QR Scanner
