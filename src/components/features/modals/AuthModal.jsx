@@ -30,22 +30,28 @@ export default function AuthModal() {
         <div className="modal-content p-3">
           <div className="modal-header">
             <h5 className="modal-title">Signing up brings new features</h5>
+            <button
+              type="button"
+              className="btn-close"
+              aria-label="Close"
+              onClick={() => setIsOpen(false)}
+            ></button>
           </div>
           <div className="modal-body text-center">
-              <p className="text-muted mb-4">Sign in to continue</p>
-              <button
-                className="btn btn-outline-dark d-flex align-items-center gap-2 px-4 py-2 rounded-pill mx-auto"
-                onClick={() => login()}
-              >
-                <img
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google"
-                  width="20"
-                  height="20"
-                />
-                <span>Please use Google to sign in...</span>
-              </button>
-            </div>
+            <p className="text-muted mb-4">Sign in to continue</p>
+            <button
+              className="btn btn-outline-dark d-flex align-items-center gap-2 px-4 py-2 rounded-pill mx-auto"
+              onClick={() => login()}
+            >
+              <img
+                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                alt="Google"
+                width="20"
+                height="20"
+              />
+              <span>Please use Google to sign in...</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
