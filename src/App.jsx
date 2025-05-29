@@ -15,7 +15,7 @@ import Showoff from "./components/Showoff";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import WOW from 'wowjs';
+import {WOW} from 'wowjs';
 import 'animate.css';
 
 
@@ -49,7 +49,7 @@ function App() {
   }, [location.pathname, reloadKey]);
 
   useEffect(() => {
-    new WOW.WOW({ live: false }).init();
+    new WOW({ live: false }).init();
   }, []);
   
   return (
