@@ -23,7 +23,7 @@ export default function Features() {
           <div className="row justify-content-center">
             <div className="col-lg-3 col-md-7 col-sm-8">
               <div
-                className="single-services text-center mt-30 wow fadeIn"
+                className="single-services text-center mt-30 wow fadeIn h-full"
                 data-wow-duration="1s"
                 data-wow-delay="0.2s"
               >
@@ -42,7 +42,7 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Amazing PDF Translator</a>
+                    <a href="javascript:void(0)">PDF Translator</a>
                   </h4>
                   <p className="text">
                     Instantly break language barriers in PDFs
@@ -56,7 +56,7 @@ export default function Features() {
 
             <div className="col-lg-3 col-md-7 col-sm-8">
               <div
-                className="single-services text-center mt-30 wow fadeIn"
+                className="single-services text-center mt-30 wow fadeIn h-full"
                 data-wow-duration="1s"
                 data-wow-delay="0.5s"
               >
@@ -89,7 +89,7 @@ export default function Features() {
 
             <div className="col-lg-3 col-md-7 col-sm-8">
               <div
-                className="single-services text-center mt-30 wow fadeIn"
+                className="single-services text-center mt-30 wow fadeIn h-full"
                 data-wow-duration="1s"
                 data-wow-delay="0.5s"
               >
@@ -108,7 +108,7 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Speedy PDF Merger</a>
+                    <a href="javascript:void(0)">PDF Merger</a>
                   </h4>
                   <p className="text">
                     Combine PDFs swiftly with intuitive drag-and-drop
@@ -124,7 +124,7 @@ export default function Features() {
 
             <div className="col-lg-3 col-md-7 col-sm-8">
               <div
-                className="single-services text-center mt-30 wow fadeIn"
+                className="single-services text-center mt-30 wow fadeIn h-full"
                 data-wow-duration="1s"
                 data-wow-delay="0.5s"
               >

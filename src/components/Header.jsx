@@ -11,7 +11,7 @@ export default function Header() {
           <div className="row">
             <div className="col-lg-12">
               <nav className="navbar navbar-expand-lg">
-                <a className="navbar-brand" href="index.html">
+                <a className="navbar-brand" href="/">
                 <img
           src="assets/images/logo/company-logo.png"
           alt="Logo"
@@ -104,8 +104,8 @@ export default function Header() {
                   data-wow-duration="1.3s"
                   data-wow-delay="0.5s"
                 >
-                  Your Ultimate Document Toolkit—Smarter, Faster, Easier!{" "}
-                  <span className="app-name">Genx PDF</span>
+                  Your Ultimate Document Toolkit
+                  <span className="app-name">Smarter, Faster, Easier!{" "}</span>
                 </h2>
                 <p
                   className="text wow fadeInUp"

@@ -70,7 +70,7 @@ export default function FeatureList() {
 
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 to-transparent"></div>
         <br></br>
-        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-400 text-center mb-12 relative z-10 drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-400 text-center mb-12 relative z-10 drop-shadow-lg pb-50 mt-10">
           Discover Our Features
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
