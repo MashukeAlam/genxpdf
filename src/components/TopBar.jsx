@@ -5,7 +5,7 @@ import Breadcrumb from './Breadcrumbs'
 export default function TopBar({breadcrumb, breadcrumbPaths}) {
   return (
     <>
-    <div className="navbar-area">
+    <div className="navbar-area pl-[2%]">
     <div className="container">
       <div className="row">
         <div className="col-lg-12"></div>
