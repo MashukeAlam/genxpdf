@@ -1,58 +1,136 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../AuthContext";
-import { useGoogleLogin } from "@react-oauth/google";
+
+const API_BASE = "https://awaitanthony.com/genuityx/api/v1";
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function AuthModal() {
   const { isOpen, setIsOpen, modalRef, username, profilePicture, setCurrentUser } = useAuth();
-  const login = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: {
-          Authorization: `Bearer ${tokenResponse.access_token}`,
-        },
-      });
-      const userInfo = await res.json();
-      const payload = JSON.stringify({sub: userInfo.sub, email: userInfo.email, name: userInfo.name});
-      setIsOpen(false)
-    },
-    onError: (error) => console.log("Login failed", error),
+  
+  const [isSignup, setIsSignup] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    device_token: "web-frontend",
+    provider: "email"
   });
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = `${API_BASE}/${isSignup ? "signup" : "signin"}`;
+
+    const body = new FormData();
+    for (const key in form) {
+      if (isSignup || (!isSignup && ["email", "password", "device_token", "provider"].includes(key))) {
+        body.append(key, form[key]);
+      }
+    }
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "x-api-key": API_KEY,
+        },
+        body,
+      });
+      const data = await res.json();
+
+      if (res.ok && data.status) {
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.data));
+        if (setCurrentUser) setCurrentUser(data.data);
+        setMessage("Success! You're logged in.");
+        setIsError(false);
+        setTimeout(() => setIsOpen(false), 1500);
+      } else {
+        setMessage(data.message || "Authentication failed");
+        setIsError(true);
+      }
+    } catch (err) {
+      console.error("Auth error:", err);
+      setMessage("Something went wrong.");
+      setIsError(true);
+    }
+  };
 
   return (
-    <div
-      className={`modal fade ${isOpen ? "show d-block" : ""}`}
-      tabIndex="-1"
-      ref={modalRef}
-      aria-hidden={!isOpen}
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-    >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
-        <div className="modal-content p-3">
-          <div className="modal-header">
-            <h5 className="modal-title">Signing up brings new features</h5>
-            <button
-              type="button"
-              className="btn-close"
-              aria-label="Close"
-              onClick={() => setIsOpen(false)}
-            ></button>
+    <div className={`fixed inset-0 z-50 ${isOpen ? "flex" : "hidden"} items-center justify-center bg-black bg-opacity-50`}>
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 relative">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          {isSignup ? "Create an account" : "Welcome back"}
+        </h2>
+        {message && (
+          <div className={`mb-4 text-sm text-center px-4 py-2 rounded ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+            {message}
           </div>
-          <div className="modal-body text-center">
-            <p className="text-muted mb-4">Sign in to continue</p>
-            <button
-              className="btn btn-outline-dark d-flex align-items-center gap-2 px-4 py-2 rounded-pill mx-auto"
-              onClick={() => login()}
-            >
-              <img
-                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                alt="Google"
-                width="20"
-                height="20"
-              />
-              <span>Please use Google to sign in...</span>
-            </button>
-          </div>
-        </div>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {isSignup && (
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+              required
+            />
+          )}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            required
+          />
+          {isSignup && (
+            <input
+              type="password"
+              name="password_confirmation"
+              placeholder="Confirm Password"
+              value={form.password_confirmation}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+              required
+            />
+          )}
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+            {isSignup ? "Sign Up" : "Sign In"}
+          </button>
+        </form>
+        <p className="text-center mt-4 text-sm">
+          {isSignup ? (
+            <>Already have an account? <button className="text-blue-600" onClick={() => setIsSignup(false)}>Sign In</button></>
+          ) : (
+            <>Don't have an account? <button className="text-blue-600" onClick={() => setIsSignup(true)}>Sign Up</button></>
+          )}
+        </p>
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+          onClick={() => setIsOpen(false)}
+        >
+          &times;
+        </button>
       </div>
     </div>
   );

@@ -1,9 +1,43 @@
 import React from "react";
 import { useAuth } from "./features/AuthContext";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import AuthenticationButton from "./AuthenticationButton";
 
 export default function Header() {
-  const { setIsOpen, username } = useAuth();
+  // const { setIsOpen, username } = useAuth();
+  // const [user, setUser] = useState(null);
+    // const [dropdownOpen, setDropdownOpen] = useState(false);
+    // const dropdownRef = useRef();
+  
+    // useEffect(() => {
+    //   const userData = localStorage.getItem("user");
+    //   if (userData) {
+    //     try {
+    //       setUser(JSON.parse(userData));
+    //     } catch {
+    //       localStorage.removeItem("user");
+    //     }
+    //   }
+  
+    //   const handleClickOutside = (e) => {
+    //     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    //       setDropdownOpen(false);
+    //     }
+    //   };
+    //   document.addEventListener("mousedown", handleClickOutside);
+    //   return () => document.removeEventListener("mousedown", handleClickOutside);
+    // }, []);
+  
+    // const handleLogout = () => {
+    //   localStorage.removeItem("user");
+    //   localStorage.removeItem("access_token");
+    //   setUser(null);
+    //   setDropdownOpen(false);
+    // };
+  
+
   return (
     <header className="header-area">
       <div className="navbar-area pl-[2%]">
@@ -12,11 +46,11 @@ export default function Header() {
             <div className="col-lg-12">
               <nav className="navbar navbar-expand-lg">
                 <a className="navbar-brand" href="/">
-                <img
-          src="assets/images/logo/company-logo.png"
-          alt="Logo"
-          className="w-32 h-8 mb-4 text-animate"
-        />                </a>
+                  <img
+                    src="assets/images/logo/company-logo.png"
+                    alt="Logo"
+                    className="w-32 h-8 mb-4 text-animate"
+                  />                </a>
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -52,29 +86,9 @@ export default function Header() {
                     </li>
                   </ul>
                   {/* navbar collapse */}
-                <div className="navbar-btn d-none d-sm-inline-block">
-                  {username.current ? (
-                    <a
-                      className="main-btn"
-                      data-scroll-nav={0}
-                      rel="nofollow"
-                    >
-                      {username.current}
-                    </a>
-                  ) : (
-                    <a
-                      className="main-btn"
-                      data-scroll-nav={0}
-                      onClick={() => setIsOpen(true)}
-                      rel="nofollow"
-                    >
-                      Join
-                    </a>
-                  )}
+                  <AuthenticationButton />
+                </div>
 
-                </div>
-                </div>
-                
               </nav>
               {/* navbar */}
             </div>
