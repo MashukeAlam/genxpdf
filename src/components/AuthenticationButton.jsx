@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "./features/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthenticationButton() {
-      const { setIsOpen, username } = useAuth();
-    
+  const { setIsOpen } = useAuth();
   const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -59,15 +60,24 @@ export default function AuthenticationButton() {
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow z-10">
+            <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow z-10">
               <button
                 className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                 onClick={() => {
                   setDropdownOpen(false);
-                  alert("Profile clicked (coming soon)");
+                  navigate("/profile");
                 }}
               >
                 Profile
+              </button>
+              <button
+                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                onClick={() => {
+                  setDropdownOpen(false);
+                  navigate("/myfiles");
+                }}
+              >
+                My Files
               </button>
               <button
                 className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"

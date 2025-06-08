@@ -13,6 +13,8 @@ import DocumentMaker from './components/DocumentMaker.jsx';
 import QrGenerator from './components/QrGenerator.jsx';
 import QrScanner from './components/QrScanner.jsx';
 import TextToSpeechTranslator from './components/TextToSpeechTranslator.jsx';
+import Profile from './components/Profile.jsx';
+import MyFiles from './components/MyFiles.jsx';
 
 const router = createBrowserRouter([
   {path: '/', element: <App />},
@@ -25,6 +27,8 @@ const router = createBrowserRouter([
   {path: '/qr-generator', element: <QrGenerator />},
   {path: '/qr-scanner', element: <QrScanner />},
   {path: '/text-to-speech', element: <TextToSpeechTranslator />},
+  {path: '/profile', element: <Profile />},
+  {path: '/myfiles', element: <MyFiles />},
   {path: '/*', element: <NotFoundPage />}
 ]);
 
