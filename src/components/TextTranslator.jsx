@@ -133,7 +133,7 @@ export default function TextTranslator() {
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">Text Translator</h1>
 
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
             <select
               value={sourceLang}
               onChange={(e) => setSourceLang(e.target.value)}

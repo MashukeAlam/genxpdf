@@ -44,7 +44,7 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                       Home
                     </a>
                   </li> */}
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a className="page-scroll" href="#features">
                       Features
                     </a>
@@ -53,7 +53,7 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                     <a className="page-scroll" href="#about">
                       About
                     </a>
-                  </li>
+                  </li> */}
 
                 </ul>
                 <AuthProvider>

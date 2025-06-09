@@ -137,7 +137,7 @@ export default function PdfTranslator() {
             PDF Translator
           </h1>
 
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
             <select
               value={sourceLang}
               onChange={(e) => setSourceLang(e.target.value)}
