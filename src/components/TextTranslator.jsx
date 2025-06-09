@@ -62,6 +62,11 @@ export default function TextTranslator() {
   };
 
   const handleSubmit = async () => {
+    if (!token) {
+      location.href = '/auth';
+      return;
+    }
+    
     if (!file && !inputText.trim()) {
       alert("Please upload a text file or enter text to translate.");
       return;

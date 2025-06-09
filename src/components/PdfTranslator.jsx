@@ -60,7 +60,7 @@ export default function PdfTranslator() {
 
   const handleSubmit = async () => {
     if (!token) {
-      alert("Please Login to continue.");
+      location.href = '/auth';
       return;
     }
     

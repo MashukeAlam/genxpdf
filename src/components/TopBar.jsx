@@ -55,10 +55,10 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                     </a>
                   </li> */}
 
-                </ul>
                 <AuthProvider>
                   <AuthenticationButton />
                 </AuthProvider>
+                </ul>
               </div>
 
 

@@ -15,6 +15,7 @@ import QrScanner from './components/QrScanner.jsx';
 import TextToSpeechTranslator from './components/TextToSpeechTranslator.jsx';
 import Profile from './components/Profile.jsx';
 import MyFiles from './components/MyFiles.jsx';
+import AuthPage from './components/AuthPage.jsx';
 
 const router = createBrowserRouter([
   {path: '/', element: <App />},
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
   {path: '/text-to-speech', element: <TextToSpeechTranslator />},
   {path: '/profile', element: <Profile />},
   {path: '/myfiles', element: <MyFiles />},
+  {path: '/auth', element: <AuthPage />},
   {path: '/*', element: <NotFoundPage />}
 ]);
 
