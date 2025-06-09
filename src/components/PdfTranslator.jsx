@@ -59,6 +59,11 @@ export default function PdfTranslator() {
   };
 
   const handleSubmit = async () => {
+    if (!token) {
+      alert("Please Login to continue.");
+      return;
+    }
+    
     if (!file) {
       alert("Please upload a PDF file first.");
       return;

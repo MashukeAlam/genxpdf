@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllDocuments } from "../common/services.js/file_services";
 import TopBar from "./TopBar";
+import { getLanguageNameByCode } from "../common/services.js/language";
 
 export default function MyFiles() {
     const [documents, setDocuments] = useState([]);
@@ -30,7 +31,8 @@ export default function MyFiles() {
                             <li key={i} className="border p-4 rounded-lg shadow-sm">
                                 {/* <p><strong>File Name:</strong> {doc.file_name}</p>
               <p><strong>Pages:</strong> {doc.pages}</p> */}
-                                <p><strong>Language:</strong> {doc.to}</p>
+                                {doc.to && (<p><strong>Language:</strong> {getLanguageNameByCode(doc.to)}</p>)}
+
                                 {doc.file && (
                                     <p>
                                         <a

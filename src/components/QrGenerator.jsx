@@ -5,6 +5,7 @@ import * as htmlToImage from "html-to-image";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import { uploadNonPdfDocument } from "../common/services.js/upload_non_pdf";
 
 
 export default function QrGenerator() {
@@ -22,20 +23,27 @@ export default function QrGenerator() {
     // QR code is generated automatically via the QRCode component
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!qrRef.current) return;
-    htmlToImage
-      .toPng(qrRef.current)
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = "qr-code.png";
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.error("Failed to download QR code:", err);
-        alert("Error downloading QR code. Please try again.");
-      });
+
+    try {
+      const dataUrl = await htmlToImage.toBlob(qrRef.current);
+      // const file = new File([dataUrl], "qr-code.png", { type: "image/png" });
+
+      // Upload to /documents/create
+      // const response = await uploadNonPdfDocument(file, 1, `${qrText} QR Code`);
+
+      // Trigger download
+      const blobUrl = URL.createObjectURL(dataUrl);
+      const link = document.createElement("a");
+      link.download = "qr-code.png";
+      link.href = blobUrl;
+      link.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Failed to process QR code:", err);
+      alert("Error processing QR code. Please try again.");
+    }
   };
 
   const handleLogoUpload = (e) => {

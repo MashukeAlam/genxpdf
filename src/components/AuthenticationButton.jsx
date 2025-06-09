@@ -11,6 +11,14 @@ export default function AuthenticationButton() {
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
+    const expiredAt = localStorage.getItem("expired_at");
+
+    if (expiredAt && expiredAt < Date.now()) {
+      console.log(expiredAt, Date.now());
+      
+      handleLogout();
+    }
+
     if (userData) {
       try {
         setUser(JSON.parse(userData));

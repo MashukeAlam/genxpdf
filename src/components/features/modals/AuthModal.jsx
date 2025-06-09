@@ -47,6 +47,8 @@ export default function AuthModal() {
       if (res.ok && data.status) {
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.data));
+        localStorage.setItem("expired_at", Date.now() + (60 * 60 * 1000));
+        
         if (setCurrentUser) setCurrentUser(data.data);
         setMessage("Success! You're logged in.");
         setIsError(false);
