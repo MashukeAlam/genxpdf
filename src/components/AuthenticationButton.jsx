@@ -88,7 +88,7 @@ export default function AuthenticationButton() {
                 My Files
               </button>
               <button
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 text-sm bg-red-500 text-white hover:bg-gray-100"
                 onClick={handleLogout}
               >
                 Logout

@@ -10,3 +10,7 @@ export const featurePaths = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" }
 ];
+
+export const homePath = [
+  {label: "Home", href: "/"}
+]

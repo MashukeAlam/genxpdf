@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import sourceLanguages from "../data/source_languages.json";
+import targetLanguages from "../data/target_languages.json";
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+const API_BASE = "https://awaitanthony.com/genuityx/api/v1";
 
 export default function TextTranslator() {
   const [file, setFile] = useState(null);
   const [inputText, setInputText] = useState("");
   const [translatedText, setTranslatedText] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [sourceLang, setSourceLang] = useState("en");
+  const [targetLang, setTargetLang] = useState("fr");
   const fileInputRef = useRef(null);
+  const token = localStorage.getItem("access_token");
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -28,7 +35,6 @@ export default function TextTranslator() {
     if (droppedFile && droppedFile.type === "text/plain") {
       setFile(droppedFile);
       setInputText("");
-      // Read file content
       const reader = new FileReader();
       reader.onload = (event) => setInputText(event.target.result);
       reader.readAsText(droppedFile);
@@ -42,7 +48,6 @@ export default function TextTranslator() {
     if (selectedFile && selectedFile.type === "text/plain") {
       setFile(selectedFile);
       setInputText("");
-      // Read file content
       const reader = new FileReader();
       reader.onload = (event) => setInputText(event.target.result);
       reader.readAsText(selectedFile);
@@ -53,7 +58,7 @@ export default function TextTranslator() {
 
   const handleTextInput = (e) => {
     setInputText(e.target.value);
-    setFile(null); // Clear file if user types directly
+    setFile(null);
   };
 
   const handleSubmit = async () => {
@@ -62,45 +67,93 @@ export default function TextTranslator() {
       return;
     }
 
-    // Simulate API call to dummy endpoint
     try {
-      // Mock API response
-      const mockResponse = {
-        translatedText: `Translated content: ${
-          inputText || "Text from " + file.name
-        }. This is a mock translation.`,
-      };
+      const textBlob = new Blob([inputText], { type: "text/plain" });
+      const uploadFile = file || new File([textBlob], "typed_text.txt", { type: "text/plain" });
 
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Upload to /upload
+      const uploadData = new FormData();
+      uploadData.append("file", uploadFile);
+      uploadData.append("pages", "1");
 
-      setTranslatedText(mockResponse.translatedText);
-    } catch (error) {
+      const uploadRes = await fetch(`${API_BASE}/upload`, {
+        method: "POST",
+        headers: {
+          "x-api-key": API_KEY,
+          "Authorization": `Bearer ${token}`,
+        },
+        body: uploadData,
+      });
+
+      const uploadJson = await uploadRes.json();
+      if (!uploadRes.ok || !uploadJson.status) throw new Error("Upload failed");
+
+      const {
+        input_container_name,
+        input_container,
+        output_container_name,
+        output_container,
+        file_name,
+      } = uploadJson.data;
+
+      // Translate
+      const translateData = new FormData();
+      translateData.append("input_container_name", input_container_name);
+      translateData.append("input_container", input_container);
+      translateData.append("output_container_name", output_container_name);
+      translateData.append("output_container", output_container);
+      translateData.append("file_name", file_name);
+      translateData.append("source", sourceLang);
+      translateData.append("target", targetLang);
+      translateData.append("pages", "1");
+
+      const translateRes = await fetch(`${API_BASE}/translate`, {
+        method: "POST",
+        headers: {
+          "x-api-key": API_KEY,
+          "Authorization": `Bearer ${token}`,
+        },
+        body: translateData,
+      });
+
+      const translateJson = await translateRes.json();
+      if (!translateRes.ok || !translateJson.status) throw new Error("Translation failed");
+
+      setTranslatedText(translateJson.data.file || "Translated file available in output container.");
+    } catch (err) {
+      console.error("Translation error:", err);
       alert("Error translating text. Please try again.");
     }
-  };
-
-  const handleDownload = () => {
-    if (!translatedText) return;
-
-    // Create a downloadable text file
-    const blob = new Blob([translatedText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "translated_text.txt";
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col  items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'Text Translator', path: '/ocr'}]}/>
+        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Text Translator', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
-          <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
-            Text Translator
-          </h1>
+          <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">Text Translator</h1>
+
+          <div className="flex gap-4 mb-4">
+            <select
+              value={sourceLang}
+              onChange={(e) => setSourceLang(e.target.value)}
+              className="flex-1 border border-blue-300 rounded p-2"
+            >
+              {sourceLanguages.data.map((lang) => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+            <select
+              value={targetLang}
+              onChange={(e) => setTargetLang(e.target.value)}
+              className="flex-1 border border-blue-300 rounded p-2"
+            >
+              {targetLanguages.data.map((lang) => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+          </div>
+
           <div
             className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
               isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
@@ -126,12 +179,14 @@ export default function TextTranslator() {
               Or click to select
             </button>
           </div>
+
           <textarea
             className="w-full h-24 p-3 border border-blue-300 rounded-lg mb-4 text-gray-700 focus:outline-none focus:border-blue-500"
             placeholder="Or type your text here..."
             value={inputText}
             onChange={handleTextInput}
           />
+
           <button
             onClick={handleSubmit}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 mb-4"
@@ -139,22 +194,21 @@ export default function TextTranslator() {
           >
             Translate Text
           </button>
+
           {translatedText && (
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                Translated Content:
-              </h3>
-              <p className="text-gray-700 text-sm bg-white/50 p-4 rounded-lg">
-                {translatedText}
-              </p>
-              <button
-                onClick={handleDownload}
-                className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
+            <div className="mt-4 text-center">
+              <p className="text-green-600 text-sm mb-2">Translation complete!</p>
+              <a
+                href={translatedText}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
               >
-                Download Translation
-              </button>
+                View Translated File
+              </a>
             </div>
           )}
+
           <Link
             to="/"
             className="mt-4 inline-block text-blue-500 hover:underline text-sm text-center w-full"

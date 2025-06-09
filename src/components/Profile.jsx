@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import TopBar from "./TopBar";
+import Footer from "./Footer";
+import { homePath } from "../common/breadcrumb_paths";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
@@ -72,7 +74,7 @@ export default function Profile() {
 
   return (
     <>
-      <TopBar />
+      <TopBar breadcrumb={true} breadcrumbPaths={[...homePath, { label: "My Files", href: "/myfiles" }]} />
       <div className="min-h-screen p-8 bg-gray-50">
         <div className="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6">
           <h2 className="text-2xl font-bold mb-4">Profile</h2>
@@ -142,6 +144,7 @@ export default function Profile() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

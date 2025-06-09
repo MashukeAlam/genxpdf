@@ -4,11 +4,13 @@ import { PDFDocument } from "pdf-lib";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import { uploadGenericDocument } from "../common/services.js/upload_generic";
 
 
 export default function PdfMerge() {
   const [files, setFiles] = useState([]);
   const [mergedFileUrl, setMergedFileUrl] = useState("");
+  const [mergedBlob, setMergedBlob] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -78,6 +80,7 @@ export default function PdfMerge() {
       const blob = new Blob([mergedBytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
 
+      setMergedBlob(blob);
       setMergedFileUrl(url);
     } catch (error) {
       alert("Error merging PDFs. Please try again.");
@@ -85,8 +88,14 @@ export default function PdfMerge() {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!mergedFileUrl) return;
+
+    const file = new File([mergedBlob], "merged_output.pdf", { type: "application/pdf" });
+
+    // Upload the file
+    const uploadResponse = await uploadGenericDocument(file, 1, "merged_output.pdf");
+    console.log("Uploaded merged file:", uploadResponse);
 
     const a = document.createElement("a");
     a.href = mergedFileUrl;
