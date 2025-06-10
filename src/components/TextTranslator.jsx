@@ -66,7 +66,7 @@ export default function TextTranslator() {
       location.href = '/auth';
       return;
     }
-    
+
     if (!file && !inputText.trim()) {
       alert("Please upload a text file or enter text to translate.");
       return;
@@ -160,9 +160,8 @@ export default function TextTranslator() {
           </div>
 
           <div
-            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
-              isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
-            }`}
+            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
+              }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}

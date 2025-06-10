@@ -113,15 +113,14 @@ export default function DocumentMaker() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col  items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'Document Maker', path: '/ocr'}]}/>
+        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Document Maker', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             Documents Maker
           </h1>
           <div
-            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
-              isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
-            }`}
+            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
+              }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}

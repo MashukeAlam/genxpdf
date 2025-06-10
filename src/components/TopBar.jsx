@@ -19,7 +19,8 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                     src="assets/images/logo/company-logo.png"
                     alt="Logo"
                     className="w-32 h-8 mb-4 text-animate"
-                  />                </a>
+                  />
+                </a>
 
               </div>
 

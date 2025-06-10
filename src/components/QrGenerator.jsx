@@ -65,7 +65,7 @@ export default function QrGenerator() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'QR Generator', path: '/ocr'}]}/>
+        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'QR Generator', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             QR Generator
