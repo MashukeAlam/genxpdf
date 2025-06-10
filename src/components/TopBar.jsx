@@ -3,6 +3,7 @@ import Filler from './Filler'
 import Breadcrumb from './Breadcrumbs'
 import AuthenticationButton from './AuthenticationButton'
 import { AuthProvider } from './features/AuthContext'
+import AuthModal from './features/modals/AuthModal'
 
 export default function TopBar({ breadcrumb, breadcrumbPaths }) {
   return (
@@ -11,7 +12,7 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
         <div className="container">
           <div className="row">
             <div className="col-lg-12"></div>
-            <nav className="navbar navbar-expand-lg flex space-between">
+            <nav className="navbar flex space-between">
               <div>
                 <a className="navbar-brand" href="/">
                   <img
@@ -19,48 +20,15 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                     alt="Logo"
                     className="w-32 h-8 mb-4 text-animate"
                   />                </a>
-                <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span className="toggler-icon"> </span>
-                  <span className="toggler-icon"> </span>
-                  <span className="toggler-icon"> </span>
-                </button>
+
               </div>
 
-              <div
-                className=" navbar-collapse sub-menu-bar"
-                id="navbarSupportedContent"
-              >
-                <ul id="nav" className="navbar-nav ms-auto">
-                  {/* <li className="nav-item">
-                    <a className="page-scroll active" href="/">
-                      Home
-                    </a>
-                  </li> */}
-                  {/* <li className="nav-item">
-                    <a className="page-scroll" href="#features">
-                      Features
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="page-scroll" href="#about">
-                      About
-                    </a>
-                  </li> */}
-
+              <div>
                 <AuthProvider>
                   <AuthenticationButton />
+                  <AuthModal />
                 </AuthProvider>
-                </ul>
               </div>
-
 
             </nav>
             {breadcrumb ?

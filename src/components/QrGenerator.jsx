@@ -28,10 +28,10 @@ export default function QrGenerator() {
 
     try {
       const dataUrl = await htmlToImage.toBlob(qrRef.current);
-      // const file = new File([dataUrl], "qr-code.png", { type: "image/png" });
+      const file = new File([dataUrl], "qr-code.png", { type: "image/png" });
 
       // Upload to /documents/create
-      // const response = await uploadNonPdfDocument(file, 1, `${qrText} QR Code`);
+      const response = await uploadNonPdfDocument(file, 1, `${qrText} QR Code`);
 
       // Trigger download
       const blobUrl = URL.createObjectURL(dataUrl);

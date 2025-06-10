@@ -44,7 +44,7 @@ export default function MyFiles() {
                                         className="border-b border-blue-100/50 hover:bg-blue-50/30 transition-colors"
                                     >
                                         <td className="px-4 py-2.5 text-sm text-gray-700">
-                                            {doc.file_name || "Untitled"}
+                                            {doc.title || "Untitled"}
                                         </td>
                                         {/* <td className="px-4 py-2.5 text-sm text-gray-700">
                                             {doc.pages || "N/A"}
