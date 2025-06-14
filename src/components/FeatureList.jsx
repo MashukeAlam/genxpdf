@@ -54,9 +54,9 @@ export default function FeatureList() {
     },
     {
       id: 8,
-      name: "Text-to-Speech",
-      description: "Transform text into speech with multilingual support.",
-      path: "/text-to-speech",
+      name: "Speech To Text",
+      description: "Transform speech into text with multilingual support.",
+      path: "/speech-to-text",
     },
   ];
 
