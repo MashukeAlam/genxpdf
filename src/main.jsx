@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    errorElement: <FeatureList />, // global fallback for nested children
+    errorElement: <FeatureList />, 
     children: [
       { path: 'features', element: <FeatureList /> },
       { path: 'pdf-translator', element: <PdfTranslator /> },

@@ -14,7 +14,7 @@ export default function Footer() {
                 className="h-12 w-auto"
               />
             </a>
-            <p className="text-gray-200 text-sm text-center md:text-left mb-4">
+            <p className="text-gray-200 text-sm md:text-left mb-4">
               Experience the power of technology with TechX where possibilities become realities.
             </p>
             <div className="flex space-x-4">

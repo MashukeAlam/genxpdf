@@ -48,9 +48,18 @@ export default function AuthPage() {
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("user", JSON.stringify(data.data));
         localStorage.setItem("expired_at", Date.now() + (60 * 60 * 1000));
-        
+
         setMessage("Success! You're logged in.");
         setIsError(false);
+        const redirect_url = localStorage.getItem('redirect_url');
+
+        if (redirect_url !== undefined) {
+          localStorage.setItem('redirect_url', undefined);
+          location.href = redirect_url;
+          return;
+        } else {
+          window.location.reload();
+        }
       } else {
         setMessage(data.message || "Authentication failed");
         setIsError(true);
@@ -72,9 +81,8 @@ export default function AuthPage() {
           </h2>
           {message && (
             <div
-              className={`mb-6 text-sm text-center px-4 py-2 rounded ${
-                isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
-              }`}
+              className={`mb-6 text-sm text-center px-4 py-2 rounded ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                }`}
             >
               {message}
             </div>

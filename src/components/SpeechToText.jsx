@@ -4,6 +4,7 @@ import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import targetLanguages from "../data/target_languages.json";
+import { setRedirectUrl } from "../common/services.js/redirect";
 
 export default function SpeechToTextTranslator() {
     const [transcript, setTranscript] = useState("");
@@ -68,6 +69,7 @@ export default function SpeechToTextTranslator() {
 
     const handleSubmit = async () => {
         if (!token) {
+            setRedirectUrl('speech-to-text');
             navigate("/auth");
             return;
         }

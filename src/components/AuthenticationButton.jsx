@@ -42,6 +42,10 @@ export default function AuthenticationButton() {
     setDropdownOpen(false);
   };
 
+  const toggleModal = () => {
+    setIsOpen(true);
+  }
+
   return (
     <div className="navbar-btn d-sm-inline-block relative" ref={dropdownRef}>
       {user ? (

@@ -53,6 +53,7 @@ export default function AuthModal() {
         setMessage("Success! You're logged in.");
         setIsError(false);
         setTimeout(() => setIsOpen(false), 1500);
+        window.location.reload();
       } else {
         setMessage(data.message || "Authentication failed");
         setIsError(true);

@@ -48,7 +48,7 @@ export default function Features() {
                     Instantly break language barriers in PDFs
                   </p>
                   <Link className="more" to="/pdf-translator">
-                    Learn More <i className="lni lni-chevron-right"></i>
+                    Try Now <i className="lni lni-chevron-right"></i>
                   </Link>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export default function Features() {
                     Capture text effortlessly from any image
                   </p>
                   <Link className="more" to="/ocr">
-                    Learn More <i className="lni lni-chevron-right"></i>
+                    Try Now <i className="lni lni-chevron-right"></i>
                   </Link>
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function Features() {
                     Combine PDFs swiftly with intuitive drag-and-drop
                   </p>
                   <Link className="more" to="/pdf-merge">
-                    Learn More <i className="lni lni-chevron-right"></i>
+                    Try Now <i className="lni lni-chevron-right"></i>
                   </Link>
                 </div>
               </div>
@@ -143,13 +143,13 @@ export default function Features() {
                 </div>
                 <div className="services-content mt-30">
                   <h4 className="services-title">
-                    <a href="javascript:void(0)">Text-to-Speech Translator</a>
+                    <a href="javascript:void(0)">Text Translation</a>
                   </h4>
                   <p className="text">
                     Listen clearly; convert text to speech flawlessly
                   </p>
-                  <Link className="more" to="/text-to-speech">
-                    Learn More <i className="lni lni-chevron-right"></i>
+                  <Link className="more" to="/speech-to-text">
+                    Try Now <i className="lni lni-chevron-right"></i>
                   </Link>
                 </div>
               </div>

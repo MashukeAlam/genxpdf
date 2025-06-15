@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import sourceLanguages from "../data/source_languages.json";
 import targetLanguages from "../data/target_languages.json";
+import { setRedirectUrl } from "../common/services.js/redirect";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_BASE = "https://awaitanthony.com/genuityx/api/v1";
@@ -63,6 +64,7 @@ export default function TextTranslator() {
 
   const handleSubmit = async () => {
     if (!token) {
+      setRedirectUrl('text-translator');
       location.href = '/auth';
       return;
     }
