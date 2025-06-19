@@ -1,22 +1,22 @@
 import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import targetLanguages from "../data/target_languages.json";
+import sourceLanguages from "../data/source_languages.json";
 import { setRedirectUrl } from "../common/services.js/redirect";
 
 export default function SpeechToTextTranslator() {
     const [transcript, setTranscript] = useState("");
     const [translatedText, setTranslatedText] = useState("");
-    const [translatedFileUrl, setTranslatedFileUrl] = useState("");
-    const [sourceLang, setSourceLang] = useState("en-US");
-    const [targetLang, setTargetLang] = useState("es-ES");
     const [isRecording, setIsRecording] = useState(false);
+    const [sourceLang, setSourceLang] = useState("en");
+    const [targetLang, setTargetLang] = useState("bn");
     const recognitionRef = useRef(null);
-    const navigate = useNavigate();
-    const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL || "https://api.example.com";
-    const API_KEY = import.meta.env.VITE_API_KEY || "your-api-key";
+    const API_BASE = "https://awaitanthony.com/genuity/api/v1";
+    // const API_BASE = "/api";
+    const API_KEY = import.meta.env.VITE_API_KEY;
     const token = localStorage.getItem("access_token");
 
     const startRecognition = () => {
@@ -69,8 +69,8 @@ export default function SpeechToTextTranslator() {
 
     const handleSubmit = async () => {
         if (!token) {
-            setRedirectUrl('speech-to-text');
-            navigate("/auth");
+            setRedirectUrl('/speech-to-text');
+            location.href = '/auth';
             return;
         }
 
@@ -80,71 +80,41 @@ export default function SpeechToTextTranslator() {
         }
 
         try {
-            const textBlob = new Blob([transcript], { type: "text/plain" });
-            const uploadFile = new File([textBlob], "transcribed_text.txt", { type: "text/plain" });
+            const formData = new FormData();
+            formData.append("source", sourceLang);
+            formData.append("target", targetLang);
+            formData.append("text", transcript);
 
-            // Upload to /upload
-            const uploadData = new FormData();
-            uploadData.append("file", uploadFile);
-            uploadData.append("pages", "1");
-
-            const uploadRes = await fetch(`${API_BASE}/upload`, {
+            const response = await fetch(`${API_BASE}/translate_text`, {
                 method: "POST",
                 headers: {
                     "x-api-key": API_KEY,
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${token}`,
+                    // Optional: Try adding these headers if supported by the server
+                    "Accept": "application/json",
+                    "Content-Type": "multipart/form-data"
                 },
-                body: uploadData,
+                body: formData
             });
 
-            const uploadJson = await uploadRes.json();
-            if (!uploadRes.ok || !uploadJson.status) throw new Error("Upload failed");
-
-            const {
-                input_container_name,
-                input_container,
-                output_container_name,
-                output_container,
-                file_name,
-            } = uploadJson.data;
-
-            // Translate
-            const translateData = new FormData();
-            translateData.append("input_container_name", input_container_name);
-            translateData.append("input_container", input_container);
-            translateData.append("output_container_name", output_container_name);
-            translateData.append("output_container", output_container);
-            translateData.append("file_name", file_name);
-            translateData.append("source", sourceLang);
-            translateData.append("target", targetLang);
-            translateData.append("pages", "1");
-
-            const translateRes = await fetch(`${API_BASE}/translate`, {
-                method: "POST",
-                headers: {
-                    "x-api-key": API_KEY,
-                    Authorization: `Bearer ${token}`,
-                },
-                body: translateData,
-            });
-
-            const translateJson = await translateRes.json();
-            if (!translateRes.ok || !translateJson.status) throw new Error("Translation failed");
-
-            setTranslatedFileUrl(translateJson.data.file);
+            const data = await response.json();
+            if (data.status) {
+                setTranslatedText(data.translated_text);
+            } else {
+                throw new Error("Translation failed: " + (data.message || "Unknown error"));
+            }
         } catch (err) {
             console.error("Translation error:", err);
-            alert("Error translating text. Please try again.");
+            alert("Error translating text. Please try again. Details: " + err.message);
         }
     };
 
-    const handleDownload = () => {
-        if (!translatedFileUrl) return;
-
-        const a = document.createElement("a");
-        a.href = translatedFileUrl;
-        a.download = "translated_text.txt";
-        a.click();
+    const handleCopy = () => {
+        navigator.clipboard.writeText(translatedText).then(() => {
+            alert("Text copied to clipboard!");
+        }, () => {
+            alert("Failed to copy text.");
+        });
     };
 
     return (
@@ -165,10 +135,9 @@ export default function SpeechToTextTranslator() {
                             className="w-full p-2 border border-blue-300 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
                             disabled={isRecording}
                         >
-                            <option value="en-US">English (US)</option>
-                            <option value="en-GB">English (UK)</option>
-                            <option value="es-ES">Spanish</option>
-                            <option value="fr-FR">French</option>
+                            {sourceLanguages.data.map((lang) => (
+                                <option key={lang.code} value={lang.code}>{lang.name}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="mb-4">
@@ -190,8 +159,8 @@ export default function SpeechToTextTranslator() {
                         <button
                             onClick={isRecording ? stopRecognition : startRecognition}
                             className={`w-full py-2 rounded-lg transition-colors duration-300 ${isRecording
-                                    ? "bg-red-600 hover:bg-red-700 text-white"
-                                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                                ? "bg-red-600 hover:bg-red-700 text-white"
+                                : "bg-blue-600 hover:bg-blue-700 text-white"
                                 }`}
                         >
                             {isRecording ? "Stop Recording" : "Start Recording"}
@@ -210,16 +179,21 @@ export default function SpeechToTextTranslator() {
                     >
                         Translate Text
                     </button>
-                    {translatedFileUrl && (
+                    {translatedText && (
                         <div className="mt-4">
                             <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                                Translated File:
+                                Translated Text:
                             </h3>
+                            <textarea
+                                className="w-full h-24 p-3 border border-blue-300 rounded-lg mb-4 text-gray-700 focus:outline-none focus:border-blue-500"
+                                value={translatedText}
+                                readOnly
+                            />
                             <button
-                                onClick={handleDownload}
+                                onClick={handleCopy}
                                 className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"
                             >
-                                Download Translated Text
+                                Copy Text
                             </button>
                         </div>
                     )}
