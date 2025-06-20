@@ -2,8 +2,9 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-indigo-500 to-blue-500 pt-12 pb-6 px-4 sm:px-6 relative">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center pt-12 pb-6 px-4 sm:px-6 relative">
+      <div className="absolute inset-0 bg-blue-900/30"></div>
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div className="flex flex-col items-center md:items-start">
@@ -14,13 +15,13 @@ export default function Footer() {
                 className="h-12 w-auto"
               />
             </a>
-            <p className="text-gray-200 text-sm md:text-left mb-4">
+            <p className="text-white text-sm md:text-left mb-4">
               Experience the power of technology with TechX where possibilities become realities.
             </p>
             <div className="flex space-x-4">
               <a
                 href="mailto:info@techxfuture.com"
-                className="text-gray-200 hover:text-blue-600 transition-colors"
+                className="text-white hover:text-blue-400 transition-colors"
               >
                 <svg
                   className="w-6 h-6"
@@ -36,12 +37,12 @@ export default function Footer() {
 
           {/* Quick Links Section */}
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="text-lg font-semibold text-blue-900 mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2 text-center md:text-left">
               <li>
                 <a
                   href="https://techxfuture.com/privacy-policy/"
-                  className="text-gray-200 hover:text-blue-600 text-sm transition-colors"
+                  className="text-white hover:text-blue-400 text-sm transition-colors"
                 >
                   Privacy Policy
                 </a>
@@ -49,7 +50,7 @@ export default function Footer() {
               <li>
                 <a
                   href="http://techxfuture.com/terms-conditions/"
-                  className="text-gray-200 hover:text-blue-600 text-sm transition-colors"
+                  className="text-white hover:text-blue-400 text-sm transition-colors"
                 >
                   Terms of Service
                 </a>
@@ -59,19 +60,19 @@ export default function Footer() {
 
           {/* Contact Section */}
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="text-lg font-semibold text-blue-900 mb-4">Contact Us</h4>
+            <h4 className="text-lg font-semibold text-white mb-4">Contact Us</h4>
             <ul className="space-y-2 text-center md:text-left">
-              <li className="text-gray-200 text-sm">+91 70100 89010</li>
-              <li className="text-gray-200 text-sm">info@techxfuture.com</li>
-              <li className="text-gray-200 text-sm">Chennai, Tamilnadu, India</li>
+              <li className="text-white text-sm">+91 70100 89010</li>
+              <li className="text-white text-sm">info@techxfuture.com</li>
+              <li className="text-white text-sm">Chennai, Tamilnadu, India</li>
             </ul>
           </div>
         </div>
 
         {/* Copyright Section */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <p className="text-gray-200 text-sm text-center">
-            &copy; {new Date().getFullYear()} TechX. All rights reserved.
+        <div className="mt-8 pt-6 border-t border-white/30">
+          <p className="text-white text-sm text-center">
+            © {new Date().getFullYear()} TechX. All rights reserved.
           </p>
         </div>
       </div>
@@ -79,7 +80,7 @@ export default function Footer() {
       {/* Back to Top Button */}
       <a
         href="#"
-        className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-20"
       >
         <svg
           className="w-5 h-5"

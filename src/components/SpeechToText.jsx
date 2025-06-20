@@ -80,8 +80,8 @@ export default function SpeechToTextTranslator() {
 
         try {
             const formData = new FormData();
-            formData.append("source", 'en');
-            formData.append("target", 'bn');
+            formData.append("source", sourceLang);
+            formData.append("target", targetLang);
             formData.append("text", transcript);
 
             const response = await fetch(`${API_BASE}/translate_text`, {
