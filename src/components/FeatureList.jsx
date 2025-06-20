@@ -18,7 +18,7 @@ export default function FeatureList() {
       name: "Text Translator",
       description:
         "Translate text instantly with support for diverse languages.",
-      path: "/text-translator",
+      path: "/speech-to-text",
     },
     {
       id: 3,
@@ -52,12 +52,12 @@ export default function FeatureList() {
       description: "Scan QR codes effortlessly, including URLs and contacts.",
       path: "/qr-scanner",
     },
-    {
-      id: 8,
-      name: "Speech To Text",
-      description: "Transform speech into text with multilingual support.",
-      path: "/speech-to-text",
-    },
+    // {
+    //   id: 8,
+    //   name: "Speech To Text",
+    //   description: "Transform speech into text with multilingual support.",
+    //   path: "/speech-to-text",
+    // },
   ];
 
   return (

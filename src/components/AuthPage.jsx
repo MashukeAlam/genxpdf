@@ -18,6 +18,7 @@ export default function AuthPage() {
   });
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,6 +26,7 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const url = `${API_BASE}/${isSignup ? "signup" : "signin"}`;
 
     const body = new FormData();
@@ -68,6 +70,8 @@ export default function AuthPage() {
       console.error("Auth error:", err);
       setMessage("Something went wrong.");
       setIsError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,8 +85,7 @@ export default function AuthPage() {
           </h2>
           {message && (
             <div
-              className={`mb-6 text-sm text-center px-4 py-2 rounded ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
-                }`}
+              className={`mb-6 text-sm text-center px-4 py-2 rounded ${isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}
             >
               {message}
             </div>
@@ -138,9 +141,20 @@ export default function AuthPage() {
             )}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium"
+              className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium flex items-center justify-center"
+              disabled={loading}
             >
-              {isSignup ? "Sign Up" : "Sign In"}
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </div>
+              ) : (
+                <>{isSignup ? "Sign Up" : "Sign In"}</>
+              )}
             </button>
           </form>
           <p className="text-center mt-6 text-sm text-gray-600">

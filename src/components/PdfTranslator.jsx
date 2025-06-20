@@ -7,9 +7,10 @@ import sourceLanguages from "../data/source_languages.json";
 import targetLanguages from "../data/target_languages.json";
 import { fetchAllDocuments } from "../common/services.js/file_services";
 import { setRedirectUrl } from "../common/services.js/redirect";
+import { setDownloadFileLink } from "../common/services.js/download_file_link";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
-const API_BASE = "https://awaitanthony.com/genuityx/api/v1";
+const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
 export default function PdfTranslator() {
   const [file, setFile] = useState(null);
@@ -122,6 +123,10 @@ export default function PdfTranslator() {
       if (!translateRes.ok || !translateJson.status) throw new Error("Translation failed");
 
       setTranslatedUrl(translateJson.data.file || "Output file is now available in output container.");
+      setDownloadFileLink(translateJson.data.file);
+      setRedirectUrl('/');
+      location.href = '/download';
+
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");

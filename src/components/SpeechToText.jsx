@@ -14,8 +14,7 @@ export default function SpeechToTextTranslator() {
     const [sourceLang, setSourceLang] = useState("en");
     const [targetLang, setTargetLang] = useState("bn");
     const recognitionRef = useRef(null);
-    const API_BASE = "https://awaitanthony.com/genuity/api/v1";
-    // const API_BASE = "/api";
+    const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
     const API_KEY = import.meta.env.VITE_API_KEY;
     const token = localStorage.getItem("access_token");
 
@@ -81,8 +80,8 @@ export default function SpeechToTextTranslator() {
 
         try {
             const formData = new FormData();
-            formData.append("source", sourceLang);
-            formData.append("target", targetLang);
+            formData.append("source", 'en');
+            formData.append("target", 'bn');
             formData.append("text", transcript);
 
             const response = await fetch(`${API_BASE}/translate_text`, {
@@ -92,7 +91,6 @@ export default function SpeechToTextTranslator() {
                     "Authorization": `Bearer ${token}`,
                     // Optional: Try adding these headers if supported by the server
                     "Accept": "application/json",
-                    "Content-Type": "multipart/form-data"
                 },
                 body: formData
             });

@@ -17,6 +17,7 @@ import Profile from './components/Profile.jsx';
 import MyFiles from './components/MyFiles.jsx';
 import AuthPage from './components/AuthPage.jsx';
 import SpeechToTextTranslator from './components/SpeechToText.jsx';
+import DownloadPage from './components/DownloadPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: 'profile', element: <Profile /> },
       { path: 'myfiles', element: <MyFiles /> },
       { path: 'auth', element: <AuthPage /> },
+      { path: 'download', element: <DownloadPage /> },
     ],
   },
   {
