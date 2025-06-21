@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center pt-12 pb-6 px-4 sm:px-6 relative">
+    <footer className="bg-[url('assets/images/header/banner-bg.svg')] bg-[size:625%] md:bg-[size:225%] bg-cover bg-no-repeat bg-center pt-12 pb-6 px-4 sm:px-6 relative">
       <div className="absolute inset-0 bg-blue-900/30"></div>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
