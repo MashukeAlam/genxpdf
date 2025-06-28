@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import { fetchAndStoreUser } from "../common/services.js/fetch_user_data";
 
 const features = [
   {
@@ -49,9 +50,18 @@ export default function DownloadPage() {
     const link = localStorage.getItem("download_link");
     if (link) {
       setDownloadLink(link);
-    //   localStorage.removeItem("download_link");
+      localStorage.removeItem("download_link");
     }
   }, []);
+
+  const [pages, setPages] = useState(null);
+
+  useEffect(() => {
+    fetchAndStoreUser();
+    if (localStorage.getItem('access_token')) {
+      setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+    }
+  }, [pages]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -59,23 +69,25 @@ export default function DownloadPage() {
         id="download"
         className="header-hero bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-[100vh] flex flex-col items-center p-8 relative overflow-hidden"
       >
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: "Download", path: "/ocr" }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: "Download", path: "/ocr" }]} />
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 to-transparent"></div>
-        
+
         <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-blue-400 text-center mb-8 relative z-10 drop-shadow-lg mt-16">
           Your File is Ready!
         </h1>
         <p className="text-lg md:text-xl text-white text-center mb-12 relative z-10 max-w-2xl">
           Get started with our powerful tools for productivity and creativity. Available for all major platforms.
         </p>
-        
+
         <a
           href={downloadLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className="relative z-10 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-4 px-8 rounded-full text-lg shadow-lg hover:from-blue-600 hover:to-blue-800 transition-all duration-300"
         >
           Download Now
         </a>
-        
+
         <div className="relative z-10 mt-16 w-full max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-8">
             Explore Our Features

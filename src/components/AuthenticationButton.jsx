@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "./features/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "./features/modals/AuthModal";
+import PageCount from "./PageCount";
 
 export default function AuthenticationButton() {
   const { setIsOpen } = useAuth();
@@ -23,6 +24,7 @@ export default function AuthenticationButton() {
         setUser(JSON.parse(userData));
       } catch {
         localStorage.removeItem("user");
+        localStorage.removeItem("user_data");
       }
     }
 
@@ -38,8 +40,10 @@ export default function AuthenticationButton() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
+    localStorage.removeItem("user_data");
     setUser(null);
     setDropdownOpen(false);
+    window.location.reload();
   };
 
   const toggleModal = () => {

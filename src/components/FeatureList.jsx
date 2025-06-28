@@ -2,6 +2,8 @@ import FeatureCard from "./FeatureCard";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function FeatureList() {
 
@@ -60,13 +62,21 @@ export default function FeatureList() {
     // },
   ];
 
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
+
   return (
     <>
       <div
         id="home"
         className="header-hero bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center p-8 relative overflow-hidden"
       >
-        <TopBar breadcrumb={true} breadcrumbPaths={featurePaths} />
+        <TopBar breadcrumb={true} breadcrumbPaths={featurePaths} pages={pages}/>
 
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 to-transparent"></div>
         <br></br>

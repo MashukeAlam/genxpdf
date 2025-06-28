@@ -9,6 +9,13 @@ export default function MyFiles() {
     const [documents, setDocuments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [pages, setPages] = useState(null);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+            setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+        }
+    }, [pages]);
 
     useEffect(() => {
         fetchAllDocuments()
@@ -20,7 +27,7 @@ export default function MyFiles() {
     return (
         <>
             <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-6 lg:p-8 overflow-hidden">
-                <TopBar breadcrumb={true} breadcrumbPaths={[...homePath, { label: "My Files", href: "/myfiles" }]} />
+                <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...homePath, { label: "My Files", href: "/myfiles" }]} />
                 <div className="flex-grow w-full max-w-7xl bg-white/80 backdrop-blur-md border border-blue-200/30 rounded-2xl shadow-lg p-6 lg:p-8">
                     <h2 className="text-3xl font-bold text-blue-900 mb-6">My Files</h2>
                     {loading && <p className="text-gray-600 text-center">Loading documents...</p>}

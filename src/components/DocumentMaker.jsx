@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import { uploadGenericDocument } from "../common/services.js/upload_generic";
 import { setDownloadFileLink } from "../common/services.js/download_file_link";
+import { useEffect } from "react";
+import { getDocumentLinkByName } from "../common/services.js/get_link_by_name";
 
 export default function DocumentMaker() {
   const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
@@ -23,6 +25,13 @@ export default function DocumentMaker() {
   const [downloadLoading, setDownloadLoading] = useState(false);
   const [preparedBlob, setPreparedBlob] = useState(null);
   const fileInputRef = useRef(null);
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -114,6 +123,7 @@ export default function DocumentMaker() {
 
       const url = URL.createObjectURL(blob);
       setGeneratedPdfUrl(url);
+      // await handleDownload();
     } catch (error) {
       console.error(error);
       alert("Error creating PDF");
@@ -127,16 +137,18 @@ export default function DocumentMaker() {
 
     setDownloadLoading(true);
     try {
-      const file = new File([preparedBlob], "Prepared Document.pdf", { type: "application/pdf" });
-      const uploadResponse = await uploadGenericDocument(file, 1, "Prepared Document.pdf");
+      const fileName = `Prepared File ${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}.pdf`
+      const file = new File([preparedBlob], fileName, { type: "application/pdf" });
+      const uploadResponse = await uploadGenericDocument(file, 1, fileName);
 
+      const link = await getDocumentLinkByName(fileName)
 
       const a = document.createElement("a");
       a.href = generatedPdfUrl;
       a.download = "converted_document.pdf";
-      a.click();
-      setDownloadFileLink(generatedPdfUrl);
-      // location.href = '/download';
+      // a.click();
+      setDownloadFileLink(link);
+      location.href = '/download';
     } catch (error) {
       console.error(error);
       alert("Error downloading PDF");
@@ -148,7 +160,7 @@ export default function DocumentMaker() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Document Maker', path: '/ocr' }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Document Maker', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             Documents Maker
@@ -265,7 +277,7 @@ export default function DocumentMaker() {
                     Processing...
                   </div>
                 ) : (
-                  <>Download PDF</>
+                  <>Proceed to Download</>
                 )}
               </button>
             </div>

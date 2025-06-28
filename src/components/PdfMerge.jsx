@@ -5,6 +5,7 @@ import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import { uploadGenericDocument } from "../common/services.js/upload_generic";
+import { useEffect } from "react";
 
 export default function PdfMerge() {
   const [files, setFiles] = useState([]);
@@ -14,6 +15,13 @@ export default function PdfMerge() {
   const [loading, setLoading] = useState(false);
   const [downloadLoading, setDownloadLoading] = useState(false);
   const fileInputRef = useRef(null);
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -118,7 +126,7 @@ export default function PdfMerge() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] flex-col bg-cover bg-center min-h-screen flex items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'PDF Merge', path: '/ocr'}]}/>
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'PDF Merge', path: '/ocr'}]}/>
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             PDF Merge

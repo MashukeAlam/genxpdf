@@ -12,6 +12,13 @@ export default function Profile() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const handleUpdateProfile = async () => {
     const formData = new FormData();
@@ -75,7 +82,7 @@ export default function Profile() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-6 lg:p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...homePath, { label: "My Files", href: "/myfiles" }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...homePath, { label: "My Files", href: "/myfiles" }]} />
         <div className="flex-grow w-full max-w-3xl bg-white/80 backdrop-blur-md border border-blue-200/30 rounded-2xl shadow-lg p-6 lg:p-8">
           <h2 className="text-3xl font-bold text-blue-900 mb-6 text-center">Profile</h2>
           {user ? (

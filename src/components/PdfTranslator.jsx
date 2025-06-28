@@ -8,6 +8,7 @@ import targetLanguages from "../data/target_languages.json";
 import { fetchAllDocuments } from "../common/services.js/file_services";
 import { setRedirectUrl } from "../common/services.js/redirect";
 import { setDownloadFileLink } from "../common/services.js/download_file_link";
+import { fetchAndStoreUser } from "../common/services.js/fetch_user_data";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
@@ -22,6 +23,13 @@ export default function PdfTranslator() {
   const [sourceList, setSourceList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const fileInputRef = useRef(null);
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const user = JSON.parse(localStorage.getItem("user") || "null");
   const token = localStorage.getItem("access_token");
@@ -125,6 +133,7 @@ export default function PdfTranslator() {
       setTranslatedUrl(translateJson.data.file || "Output file is now available in output container.");
       setDownloadFileLink(translateJson.data.file);
       setRedirectUrl('/');
+      await fetchAndStoreUser();
       location.href = '/download';
 
     } catch (err) {
@@ -138,7 +147,7 @@ export default function PdfTranslator() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: "PDF Translator", path: "/ocr" }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: "PDF Translator", path: "/ocr" }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             PDF Translator

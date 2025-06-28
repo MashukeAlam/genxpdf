@@ -6,6 +6,7 @@ import { featurePaths } from "../common/breadcrumb_paths";
 import targetLanguages from "../data/target_languages.json";
 import sourceLanguages from "../data/source_languages.json";
 import { setRedirectUrl } from "../common/services.js/redirect";
+import { useEffect } from "react";
 
 export default function SpeechToTextTranslator() {
     const [transcript, setTranscript] = useState("");
@@ -17,6 +18,13 @@ export default function SpeechToTextTranslator() {
     const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
     const API_KEY = import.meta.env.VITE_API_KEY;
     const token = localStorage.getItem("access_token");
+    const [pages, setPages] = useState(null);
+    
+      useEffect(() => {
+        if (localStorage.getItem('access_token')) {
+          setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+        }
+      }, [pages]);
 
     const startRecognition = () => {
         if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
@@ -118,7 +126,7 @@ export default function SpeechToTextTranslator() {
     return (
         <>
             <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
-                <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Speech to Text Translator', path: '/speech-to-text' }]} />
+                <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Speech to Text Translator', path: '/speech-to-text' }]} />
                 <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
                     <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
                         Speech-to-Text Translator

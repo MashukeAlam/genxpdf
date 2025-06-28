@@ -19,6 +19,13 @@ export default function TextTranslator() {
   const [targetLang, setTargetLang] = useState("fr");
   const fileInputRef = useRef(null);
   const token = localStorage.getItem("access_token");
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -136,7 +143,7 @@ export default function TextTranslator() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col  items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Text Translator', path: '/ocr' }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'Text Translator', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">Text Translator</h1>
 

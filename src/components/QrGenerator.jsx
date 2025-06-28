@@ -6,6 +6,7 @@ import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import { uploadNonPdfDocument } from "../common/services.js/upload_non_pdf";
+import { useEffect } from "react";
 
 
 export default function QrGenerator() {
@@ -14,6 +15,13 @@ export default function QrGenerator() {
   const [logo, setLogo] = useState(null);
   const qrRef = useRef(null);
   const logoInputRef = useRef(null);
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const handleGenerate = () => {
     if (!qrText.trim()) {
@@ -65,7 +73,7 @@ export default function QrGenerator() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'QR Generator', path: '/ocr' }]} />
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'QR Generator', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             QR Generator

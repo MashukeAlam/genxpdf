@@ -4,6 +4,7 @@ import Tesseract from "tesseract.js";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
+import { useEffect } from "react";
 
 export default function Ocr() {
   const [file, setFile] = useState(null);
@@ -12,6 +13,13 @@ export default function Ocr() {
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState('');
   const worker = useRef(null);
+  const [pages, setPages] = useState(null);
+  
+    useEffect(() => {
+      if (localStorage.getItem('access_token')) {
+        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+      }
+    }, [pages]);
 
   const fileInputRef = useRef(null);
 
@@ -92,7 +100,7 @@ export default function Ocr() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] bg-cover bg-center min-h-screen flex flex-col  items-center justify-center p-8 overflow-hidden">
-        <TopBar breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'OCR', path: '/ocr'}]}/>
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'OCR', path: '/ocr'}]}/>
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             OCR (Image to Text)

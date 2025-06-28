@@ -7,47 +7,23 @@ import AuthenticationButton from "./AuthenticationButton";
 import TopBar from "./TopBar";
 
 export default function Header() {
-  // const { setIsOpen, username } = useAuth();
-  // const [user, setUser] = useState(null);
-    // const [dropdownOpen, setDropdownOpen] = useState(false);
-    // const dropdownRef = useRef();
-  
-    // useEffect(() => {
-    //   const userData = localStorage.getItem("user");
-    //   if (userData) {
-    //     try {
-    //       setUser(JSON.parse(userData));
-    //     } catch {
-    //       localStorage.removeItem("user");
-    //     }
-    //   }
-  
-    //   const handleClickOutside = (e) => {
-    //     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-    //       setDropdownOpen(false);
-    //     }
-    //   };
-    //   document.addEventListener("mousedown", handleClickOutside);
-    //   return () => document.removeEventListener("mousedown", handleClickOutside);
-    // }, []);
-  
-    // const handleLogout = () => {
-    //   localStorage.removeItem("user");
-    //   localStorage.removeItem("access_token");
-    //   setUser(null);
-    //   setDropdownOpen(false);
-    // };
-  
+  const [pages, setPages] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+    }
+  }, [pages]);
 
   return (
     <header className="header-area">
-      
+
       <div
         id="home"
         className="header-hero bg_cover"
         style={{ backgroundImage: "url(assets/images/header/banner-bg.svg)" }}
       >
-        <TopBar />
+        <TopBar pages={pages} />
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">

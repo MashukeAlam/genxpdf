@@ -4,8 +4,10 @@ import Breadcrumb from './Breadcrumbs'
 import AuthenticationButton from './AuthenticationButton'
 import { AuthProvider } from './features/AuthContext'
 import AuthModal from './features/modals/AuthModal'
+import PageCount from './PageCount'
+import { useEffect } from 'react'
 
-export default function TopBar({ breadcrumb, breadcrumbPaths }) {
+export default function TopBar({ breadcrumb, breadcrumbPaths, pages }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -40,31 +42,32 @@ export default function TopBar({ breadcrumb, breadcrumbPaths }) {
                     </svg>
                   </button>
 
-                {/* Desktop Navigation */}
-                <ul id="nav" className="hidden md:flex flex-row items-center mr-5 gap-4 list-none">
-                  <li className="nav-item flex items-center">
-                    <a className="page-scroll active text-orange-400 hover:text-orange-600" href="/">
-                      Home
-                    </a>
-                  </li>
-                  <li className="nav-item flex items-center">
-                    <a className="page-scroll text-orange-400 hover:text-orange-600" href="#features">
-                      Features
-                    </a>
-                  </li>
-                  <li className="nav-item flex items-center">
-                    <a className="page-scroll text-orange-400 hover:text-orange-600" href="#about">
-                      About
-                    </a>
-                  </li>
-                </ul>
+                  {/* Desktop Navigation */}
+                  <ul id="nav" className="hidden md:flex flex-row items-center mr-5 gap-4 list-none">
+                    <li className="nav-item flex items-center">
+                      <a className="page-scroll active text-orange-400 hover:text-orange-600" href="/">
+                        Home
+                      </a>
+                    </li>
+                    <li className="nav-item flex items-center">
+                      <a className="page-scroll text-orange-400 hover:text-orange-600" href="/features">
+                        Features
+                      </a>
+                    </li>
+                    <li className="nav-item flex items-center">
+                      <a className="page-scroll text-orange-400 hover:text-orange-600" href="#about">
+                        About
+                      </a>
+                    </li>
+                  </ul>
 
-                {/* Authentication Button (Always Visible) */}
+                  {/* Authentication Button (Always Visible) */}
                   <div className="flex items-center">
                     <AuthProvider>
                       <AuthenticationButton />
                       <AuthModal />
                     </AuthProvider>
+                  {pages && pages !== NaN && <PageCount pages={pages} />}
                   </div>
                 </div>
 
