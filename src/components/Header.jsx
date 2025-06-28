@@ -13,7 +13,7 @@ export default function Header() {
     if (localStorage.getItem('access_token')) {
       setPages(JSON.parse(localStorage.getItem("user_data")).pages);
     }
-  }, [pages]);
+  }, []);
 
   return (
     <header className="header-area">
