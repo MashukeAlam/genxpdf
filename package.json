@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
+    "@tailwindcss/vite": "^4.1.11",
     "animate.css": "^4.1.1",
     "html-to-image": "^1.11.13",
     "html5-qrcode": "^2.3.8",
@@ -23,6 +24,7 @@
     "react-qr-code": "^2.0.15",
     "react-router-dom": "^7.5.3",
     "react-transition-group": "^4.4.5",
+    "tailwindcss": "^4.1.11",
     "tesseract.js": "^6.0.1",
     "wowjs": "^1.1.3"
   },
