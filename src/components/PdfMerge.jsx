@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import { featurePaths } from "../common/breadcrumb_paths";
 import { uploadGenericDocument } from "../common/services.js/upload_generic";
 import { useEffect } from "react";
+import { getDocumentLinkByName } from "../common/services.js/get_link_by_name";
+import { setDownloadFileLink } from "../common/services.js/download_file_link";
 
 export default function PdfMerge() {
   const [files, setFiles] = useState([]);
@@ -16,12 +18,12 @@ export default function PdfMerge() {
   const [downloadLoading, setDownloadLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [pages, setPages] = useState(null);
-  
-    useEffect(() => {
-      if (localStorage.getItem('access_token')) {
-        setPages(JSON.parse(localStorage.getItem("user_data")).pages);
-      }
-    }, [pages]);
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      setPages(JSON.parse(localStorage.getItem("user_data")).pages);
+    }
+  }, [pages]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -105,16 +107,20 @@ export default function PdfMerge() {
 
     setDownloadLoading(true);
     try {
-      const file = new File([mergedBlob], "merged_output.pdf", { type: "application/pdf" });
+      const fileName = `Merged File ${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}.pdf`
+      const file = new File([mergedBlob], fileName, { type: "application/pdf" });
 
       // Upload the file
-      const uploadResponse = await uploadGenericDocument(file, 1, "merged_output.pdf");
-      console.log("Uploaded merged file:", uploadResponse);
+      const uploadResponse = await uploadGenericDocument(file, 1, fileName);
+      const link = await getDocumentLinkByName(fileName)
 
-      const a = document.createElement("a");
-      a.href = mergedFileUrl;
-      a.download = "merged_output.pdf";
-      a.click();
+      // const a = document.createElement("a");
+      // a.href = generatedPdfUrl;
+      // a.download = "converted_document.pdf";
+      // a.click();
+      setDownloadFileLink(link);
+      location.href = '/download';
+      // a.click();
     } catch (error) {
       alert("Error downloading PDF. Please try again.");
       console.error(error);
@@ -126,15 +132,14 @@ export default function PdfMerge() {
   return (
     <>
       <div className="bg-[url('assets/images/header/banner-bg.svg')] flex-col bg-cover bg-center min-h-screen flex items-center justify-center p-8 overflow-hidden">
-        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, {label: 'PDF Merge', path: '/ocr'}]}/>
+        <TopBar pages={pages} breadcrumb={true} breadcrumbPaths={[...featurePaths, { label: 'PDF Merge', path: '/ocr' }]} />
         <div className="bg-white/70 backdrop-blur-md border border-blue-200/30 rounded-2xl p-8 max-w-lg w-full shadow-lg">
           <h1 className="text-2xl font-bold text-blue-900 mb-4 text-center">
             PDF Merge
           </h1>
           <div
-            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${
-              isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
-            }`}
+            className={`border-2 border-dashed rounded-lg p-6 mb-4 text-center ${isDragging ? "border-blue-500 bg-blue-100/50" : "border-blue-300"
+              }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -218,7 +223,7 @@ export default function PdfMerge() {
                     Processing...
                   </div>
                 ) : (
-                  <>Download Merged PDF</>
+                  <>Proceed To Download</>
                 )}
               </button>
             </div>

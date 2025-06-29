@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "./features/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AuthModal from "./features/modals/AuthModal";
-import PageCount from "./PageCount";
 
 export default function AuthenticationButton() {
   const { setIsOpen } = useAuth();
@@ -42,15 +41,11 @@ export default function AuthenticationButton() {
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
     localStorage.removeItem("user_data");
-      localStorage.removeItem("expired_at");
+    localStorage.removeItem("expired_at");
     setUser(null);
     setDropdownOpen(false);
     window.location.reload();
   };
-
-  const toggleModal = () => {
-    setIsOpen(true);
-  }
 
   return (
     <div className="navbar-btn d-sm-inline-block relative" ref={dropdownRef}>
@@ -58,20 +53,18 @@ export default function AuthenticationButton() {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white rounded-full shadow border focus:outline-none w-full sm:w-auto"
+            className="flex items-center gap-2 px-2 py-2 sm:px-4 sm:py-2 bg-white rounded-full shadow border focus:outline-none w-auto"
           >
             <img
               src={user.image}
               alt={user.name}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover"
+              className="w-8 h-8 sm:w-8 sm:h-8 rounded-full object-cover"
             />
-            <span className="text-xs sm:text-sm font-medium truncate max-w-[120px] sm:max-w-[150px]">
+            <span className="hidden sm:inline text-sm font-medium truncate max-w-[150px]">
               {user.name}
             </span>
             <svg
-              className={`w-3 h-3 sm:w-4 sm:h-4 ml-1 transition-transform ${
-                dropdownOpen ? "rotate-180" : ""
-              }`}
+              className={`w-4 h-4 ml-1 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -81,9 +74,9 @@ export default function AuthenticationButton() {
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-full sm:w-44 bg-white border rounded-lg shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-40 sm:w-44 bg-white border rounded-lg shadow-lg z-10">
               <button
-                className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 transition-colors"
+                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
                 onClick={() => {
                   setDropdownOpen(false);
                   navigate("/profile");
@@ -92,7 +85,7 @@ export default function AuthenticationButton() {
                 Profile
               </button>
               <button
-                className="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 transition-colors"
+                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
                 onClick={() => {
                   setDropdownOpen(false);
                   navigate("/myfiles");
@@ -101,7 +94,7 @@ export default function AuthenticationButton() {
                 My Files
               </button>
               <button
-                className="w-full text-left px-4 py-2.5 text-sm bg-red-500 text-white hover:bg-red-600 transition-colors"
+                className="w-full text-left px-4 py-2 text-sm bg-red-500 text-white hover:bg-red-600 transition-colors"
                 onClick={handleLogout}
               >
                 Logout
@@ -109,16 +102,15 @@ export default function AuthenticationButton() {
             </div>
           )}
         </div>
-      ) : (<>
+      ) : (
         <button
-          className="main-btn px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm sm:text-base"
+          className="main-btn px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors text-sm sm:text-base"
           data-scroll-nav={0}
           onClick={() => setIsOpen(true)}
           rel="nofollow"
         >
           Join
         </button>
-        </>
       )}
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { homePath } from "../common/breadcrumb_paths";
+import { useEffect } from "react";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;

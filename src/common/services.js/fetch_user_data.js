@@ -15,7 +15,7 @@ export async function fetchAndStoreUser() {
 
   const data = await res.json();
   if (res.ok && data.status !== false) {
-    localStorage.setItem("user_data", JSON.stringify(data.data));
+    localStorage.setItem("user_data", JSON.stringify(data.data));    
     return data.data;
   } else {
     console.error("Failed to fetch user data:", data.message);
