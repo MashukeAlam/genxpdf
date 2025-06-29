@@ -47,7 +47,7 @@ export default function AuthenticationButton() {
   };
 
   return (
-    <div className="navbar-btn inline-block sm:inline-block relative" ref={dropdownRef}>
+    <div className="navbar-btnobsolete inline-block sm:inline-block relative" ref={dropdownRef}>
       {user ? (
         <div className="relative">
           <button
