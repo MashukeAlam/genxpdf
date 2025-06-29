@@ -67,7 +67,7 @@ export default function TopBar({ breadcrumb, breadcrumbPaths, pages }) {
                       <AuthenticationButton />
                       <AuthModal />
                     </AuthProvider>
-                  {pages && pages !== NaN && <PageCount pages={pages} />}
+                  {pages && pages != NaN && <PageCount pages={pages} />}
                   </div>
                 </div>
 

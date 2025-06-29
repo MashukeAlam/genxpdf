@@ -13,10 +13,11 @@ export default function AuthenticationButton() {
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
-    const expiredAt = localStorage.getItem("expired_at");
+    const expiredAt = parseInt(localStorage.getItem("expired_at"), 10);
 
     if (expiredAt && expiredAt < Date.now()) {
       handleLogout();
+      return;
     }
 
     if (userData) {
@@ -41,6 +42,7 @@ export default function AuthenticationButton() {
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
     localStorage.removeItem("user_data");
+      localStorage.removeItem("expired_at");
     setUser(null);
     setDropdownOpen(false);
     window.location.reload();
