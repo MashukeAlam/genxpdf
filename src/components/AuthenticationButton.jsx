@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "./features/AuthContext";
 import { useNavigate } from "react-router-dom";
-import AuthModal from "./features/modals/AuthModal";
 
 export default function AuthenticationButton() {
   const { setIsOpen } = useAuth();
@@ -48,7 +47,7 @@ export default function AuthenticationButton() {
   };
 
   return (
-    <div className="navbar-btn d-sm-inline-block relative" ref={dropdownRef}>
+    <div className="navbar-btn inline-block sm:inline-block relative" ref={dropdownRef}>
       {user ? (
         <div className="relative">
           <button
@@ -58,13 +57,13 @@ export default function AuthenticationButton() {
             <img
               src={user.image}
               alt={user.name}
-              className="w-8 h-8 sm:w-8 sm:h-8 rounded-full object-cover"
+              className="w-8 h-8 rounded-full object-cover"
             />
             <span className="hidden sm:inline text-sm font-medium truncate max-w-[150px]">
               {user.name}
             </span>
             <svg
-              className={`w-4 h-4 ml-1 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+              className={`hidden sm:block w-4 h-4 ml-1 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -104,7 +103,7 @@ export default function AuthenticationButton() {
         </div>
       ) : (
         <button
-          className="main-btn px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors text-sm sm:text-base"
+          className="main-btn px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-[20px] hover:bg-blue-700 transition-colors text-sm sm:text-base font-medium"
           data-scroll-nav={0}
           onClick={() => setIsOpen(true)}
           rel="nofollow"
