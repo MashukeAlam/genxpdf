@@ -57,7 +57,7 @@ export default function TopBar({ breadcrumb, breadcrumbPaths, pages }) {
                     <li className="nav-item flex items-center">
                       <a
                         className="page-scroll text-orange-400 hover:text-orange-600"
-                        href="#about"
+                        href="/about-me"
                       >
                         About
                       </a>

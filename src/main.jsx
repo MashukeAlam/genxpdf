@@ -18,6 +18,7 @@ import MyFiles from './components/MyFiles.jsx';
 import AuthPage from './components/AuthPage.jsx';
 import SpeechToTextTranslator from './components/SpeechToText.jsx';
 import DownloadPage from './components/DownloadPage.jsx';
+import AboutModern from './components/AboutModern.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: 'myfiles', element: <MyFiles /> },
       { path: 'auth', element: <AuthPage /> },
       { path: 'download', element: <DownloadPage /> },
+      { path: '/about-me', element: <AboutModern/> },
     ],
   },
   {
