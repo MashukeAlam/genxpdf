@@ -68,8 +68,8 @@ export default function AboutModern() {
           ) : (
             <div className="space-y-6">
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-blue-900">App Details</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <h3 className="hidden text-xl font-semibold text-blue-900">App Details</h3>
+                <div className="hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-blue-900">App Name</p>
                     <p className="text-gray-700">{appDetails.app_name || "N/A"}</p>
