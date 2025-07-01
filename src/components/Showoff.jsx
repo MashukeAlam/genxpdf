@@ -89,15 +89,19 @@ export default function Showoff() {
                 />
                 <div className="video-wrapper">
                   <div className="video-image">
-                    <img src="assets/images/video/video.png" alt="video" />
+                    <div
+                      className="about-image text-center mt-50 wow fadeInRightBig"
+                      data-wow-duration="1s"
+                      data-wow-delay="0.5s"
+                    >
+                      <img
+                        src="assets/images/about/about1.svg"
+                        alt="All-in-One Toolkit"
+                      />
+                    </div>
                   </div>
                   <div className="video-icon">
-                    <a
-                      href="https://www.youtube.com/watch?v=r44RKWyfcFw"
-                      className="video-popup glightbox"
-                    >
-                      <i className="lni lni-play"></i>
-                    </a>
+                    
                   </div>
                 </div>
               </div>

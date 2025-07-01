@@ -86,7 +86,7 @@ export default function AboutModern() {
                 <div>
                   <p className="text-sm font-medium text-blue-900 mb-1">About</p>
                   <div
-                    className="w-full border border-blue-300 rounded-lg px-4 py-2.5 text-gray-700 bg-gray-50 min-h-[100px]"
+                    className="w-full  rounded-lg px-4 py-2.5 text-gray-700 min-h-[100px]"
                     dangerouslySetInnerHTML={{ __html: appDetails.about || "No about information available" }}
                   />
                 </div>
