@@ -3,7 +3,7 @@ import TopBar from "./TopBar";
 import Footer from "./Footer";
 import { useAuth } from "./features/AuthContext";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -32,13 +32,13 @@ export default function AuthPage() {
     await authenticate(form);
   };
 
-  const authenticate = async (formData) => {
+  const authenticate = async (formData, isGoogleSignup = false) => {
     setLoading(true);
-    const url = `${API_BASE}/${isSignup ? "signup" : "signin"}`;
+    const url = `${API_BASE}/${isGoogleSignup || isSignup ? "signup" : "signin"}`;
 
     const body = new FormData();
     for (const key in formData) {
-      if (isSignup || (!isSignup && ["email", "password", "device_token", "provider"].includes(key))) {
+      if (isGoogleSignup || isSignup || ["email", "password", "device_token", "provider"].includes(key)) {
         body.append(key, formData[key]);
       }
     }
@@ -58,35 +58,33 @@ export default function AuthPage() {
         localStorage.setItem("user", JSON.stringify(data.data));
         localStorage.setItem("expired_at", Date.now() + 60 * 60 * 1000);
 
-        setMessage("Success! You're logged in.");
+        setMessage(`Success! You're ${isGoogleSignup || isSignup ? "signed up and " : ""}logged in.`);
         setIsError(false);
         const redirect_url = localStorage.getItem("redirect_url");
 
         if (redirect_url !== undefined) {
           localStorage.setItem("redirect_url", undefined);
           location.href = redirect_url;
-          return;
+          return { success: true };
         } else {
           window.location.reload();
+          return { success: true };
         }
       } else {
-        setMessage(data.message || "Authentication failed");
-        setIsError(true);
+        return { success: false, message: data.message || "Authentication failed" };
       }
     } catch (err) {
       console.error("Auth error:", err);
-      setMessage("Something went wrong.");
-      setIsError(true);
+      return { success: false, message: "Something went wrong." };
     } finally {
       setLoading(false);
     }
   };
 
-  const handleGoogleSuccess = (credentialResponse) => {
+  const handleGoogleSuccess = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
 
     console.log(decoded);
-    
 
     const googleForm = {
       name: decoded.name,
@@ -97,7 +95,23 @@ export default function AuthPage() {
       provider: "google",
     };
 
-    authenticate(googleForm);
+    // Try signin first
+    const signinResult = await authenticate(googleForm);
+    if (signinResult.success) return; // If signin succeeds, we're done
+
+    // If signin fails due to non-existent account, try signup
+    if (signinResult.message.includes("Authentication failed") || signinResult.message.includes("Invalid credentials")) {
+      setMessage("No account found. Creating a new account...");
+      setIsError(false);
+      const signupResult = await authenticate(googleForm, true); // Try signup
+      if (!signupResult.success) {
+        setMessage(signupResult.message);
+        setIsError(true);
+      }
+    } else {
+      setMessage(signinResult.message);
+      setIsError(true);
+    }
   };
 
   return (

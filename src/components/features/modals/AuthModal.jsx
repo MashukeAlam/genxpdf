@@ -35,13 +35,13 @@ export default function AuthModal() {
     await authenticate(form);
   };
 
-  const authenticate = async (formData) => {
+  const authenticate = async (formData, isGoogleSignup = false) => {
     setLoading(true);
-    const url = `${API_BASE}/${isSignup ? "signup" : "signin"}`;
+    const url = `${API_BASE}/${isGoogleSignup || isSignup ? "signup" : "signin"}`;
 
     const body = new FormData();
     for (const key in formData) {
-      if (isSignup || (!isSignup && ["email", "password", "device_token", "provider"].includes(key))) {
+      if (isGoogleSignup || isSignup || ["email", "password", "device_token", "provider"].includes(key)) {
         body.append(key, formData[key]);
       }
     }
@@ -55,8 +55,7 @@ export default function AuthModal() {
         body,
       });
       const data = await res.json();
-      console.log("correct:", data);
-      
+      console.log("Response:", data);
 
       if (res.ok && data.status) {
         localStorage.setItem("access_token", data.access_token);
@@ -64,23 +63,22 @@ export default function AuthModal() {
         localStorage.setItem("expired_at", Date.now() + 60 * 60 * 1000);
 
         if (setCurrentUser) setCurrentUser(data.data);
-        setMessage("Success! You're logged in.");
+        setMessage(`Success! You're ${isGoogleSignup || isSignup ? "signed up and " : ""}logged in.`);
         setIsError(false);
         setTimeout(() => setIsOpen(false), 1500);
         await fetchAndStoreUser();
 
         window.location.reload();
       } else {
-        setMessage(data.message || "Authentication failed");
-        setIsError(true);
+        return { success: false, message: data.message || "Authentication failed" };
       }
     } catch (err) {
       console.error("Auth error:", err);
-      setMessage("Something went wrong.");
-      setIsError(true);
+      return { success: false, message: "Something went wrong." };
     } finally {
       setLoading(false);
     }
+    return { success: false, message: "Authentication failed" };
   };
 
   const handleForgotPassword = async () => {
@@ -114,7 +112,7 @@ export default function AuthModal() {
     }
   };
 
-  const handleGoogleSuccess = (credentialResponse) => {
+  const handleGoogleSuccess = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
 
     const googleForm = {
@@ -126,7 +124,23 @@ export default function AuthModal() {
       provider: "google",
     };
 
-    authenticate(googleForm);
+    // Try signin first
+    const signinResult = await authenticate(googleForm);
+    if (signinResult.success) return; // If signin succeeds, we're done
+
+    // If signin fails due to non-existent account, try signup
+    if (signinResult.message.includes("Authentication failed") || signinResult.message.includes("do not match")) {
+      setMessage("No account found. Creating a new account...");
+      setIsError(false);
+      const signupResult = await authenticate(googleForm, true); // Try signup
+      if (!signupResult.success) {
+        setMessage(signupResult.message);
+        setIsError(true);
+      }
+    } else {
+      setMessage(signinResult.message);
+      setIsError(true);
+    }
   };
 
   return (
