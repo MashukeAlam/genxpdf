@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Filler from './Filler';
 import Breadcrumb from './Breadcrumbs';
 import AuthenticationButton from './AuthenticationButton';
@@ -9,9 +9,45 @@ import PageCount from './PageCount';
 export default function TopBar({ breadcrumb, breadcrumbPaths, pages }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
+
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+        const fetchAboutData = async () => {
+          const formData = new FormData();
+          formData.append("platform", "about");
+    
+          try {
+            const res = await fetch(`${API_BASE}/settings`, {
+              method: "POST",
+              headers: {
+                "x-api-key": API_KEY,
+                "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+              },
+              body: formData,
+            });
+    
+            const data = await res.json();
+            // console.log("About fetch response:", data);
+            if (data.status && data.data) {
+              document.title = data.data.app_name;
+            } else {
+            }
+          } catch (err) {
+            console.error(err);
+          } finally {
+          }
+        };
+    
+        fetchAboutData();
+      }, []);
+    
 
   return (
     <>

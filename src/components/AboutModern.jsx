@@ -34,7 +34,7 @@ export default function AboutModern() {
         });
 
         const data = await res.json();
-        console.log("About fetch response:", data);
+        // console.log("About fetch response:", data);
         if (data.status && data.data) {
           setAppDetails(data.data);
         } else {

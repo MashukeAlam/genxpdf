@@ -22,6 +22,10 @@ function App() {
   const googleClientSecret = import.meta.env.VITE_CLIENT_SECRET;
   const googleClientId = import.meta.env.VITE_CLIENT_ID;
 
+
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_BASE = import.meta.env.VITE_BACKEND_API_BASE_URL;
+
   const location = useLocation();
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -45,6 +49,37 @@ function App() {
     // Run fadeout on every load
     fadeout();
   }, [location.pathname, reloadKey]);
+
+  useEffect(() => {
+      const fetchAboutData = async () => {
+        const formData = new FormData();
+        formData.append("platform", "about");
+  
+        try {
+          const res = await fetch(`${API_BASE}/settings`, {
+            method: "POST",
+            headers: {
+              "x-api-key": API_KEY,
+              "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: formData,
+          });
+  
+          const data = await res.json();
+          console.log("About fetch response:", data);
+          if (data.status && data.data) {
+            document.title = data.data.app_name;
+          } else {
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+        }
+      };
+  
+      fetchAboutData();
+    }, []);
+  
 
   
   return (
