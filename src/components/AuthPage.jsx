@@ -206,7 +206,7 @@ export default function AuthPage() {
                 </>
               ) : (
                 <>
-                  Don't have an account?{" "}
+                  Don't have an account?11111{" "}
                   <button className="text-blue-600 hover:underline font-medium" onClick={() => setIsSignup(true)}>
                     Sign Up
                   </button>
